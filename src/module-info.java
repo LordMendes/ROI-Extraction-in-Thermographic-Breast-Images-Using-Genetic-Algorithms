@@ -1,2 +1,3 @@
 module GATIS {
+	requires uacari;
 }
