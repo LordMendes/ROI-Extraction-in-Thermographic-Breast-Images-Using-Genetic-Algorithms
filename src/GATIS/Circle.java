@@ -27,6 +27,18 @@ public class Circle {
 	
 	Circle(int[] x, int[] y, int[] r){
 		
+		int test = MyMath.binaryToDecimal(r);
+		if(test > 100) {
+			r = MyMath.decToBinary(100);
+		}
+		test = MyMath.binaryToDecimal(y);
+		if(test > 350) {
+			y = MyMath.decToBinary(350);
+		}else if(test < 50) {
+			y = MyMath.decToBinary(50);
+		}	
+		
+		
 		cX = MyMath.binaryToDecimal(x);
 		bX = x;
 		cY = MyMath.binaryToDecimal(y);
@@ -91,6 +103,7 @@ public class Circle {
 	
 	void setRadius(int r) {
 		radius = r;
+		bR = MyMath.decToBinary(r);
 	}
 	
 

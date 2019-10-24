@@ -10,7 +10,7 @@ public class GA {
 	//CONSTANTS
 	final int decimalArraySize = 10;
 	final static int POP = 20;
-	final int GEN = 350;
+	final int GEN = 10;
 	final float mR = 0.1f;
 	final float cR = 0.7f;
 	//ATTRIBUTES
@@ -102,8 +102,10 @@ public class GA {
 				auxRr[i] = d2.getBr()[i];
 			}			
 		}
+
 		Circle cl = new Circle(auxXl, auxYl, auxRl);
 		Circle cr = new Circle(auxXr, auxYr, auxRr);
+
 		Individual children = new Individual(cl,cr,img);
 		
 		//System.out.println(" --> Child : "+children.getScore());
@@ -188,7 +190,7 @@ public class GA {
 		Individual a1 = pop.get(x1);
 		Individual a2 = pop.get(x2);
 		
-		if(a1.getScore() >= a2.getScore())
+		if(a1.getScore() <= a2.getScore())
 			return a1;
 		else
 			return a2;
@@ -265,8 +267,8 @@ public class GA {
 			}
 			popAux.clear();
 			System.out.print("Geração "+n+" -> ");
-			printBest();
-			//printAll();
+			//printBest();
+			printAll();
 			n++;
 		}
 	}

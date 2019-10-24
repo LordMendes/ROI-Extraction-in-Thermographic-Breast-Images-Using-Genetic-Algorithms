@@ -74,7 +74,7 @@ public class Individual implements Comparable<Object>{
 		int inter = interceptVol(img);
 		int total = vol[0]+vol[1]+vol[2]+vol[3];
 		
-		score = (bw*b+sw*s+hw*h+ww*w+interw*inter)/total*wt;
+		score = Math.abs((bw*b+sw*s+hw*h+ww*w+interw*inter)/total);
 		
 		//System.out.println("Score : "+score);
 		
@@ -150,7 +150,7 @@ public class Individual implements Comparable<Object>{
 	
 
 	
-	void draw(Image img) {
+	void draw(Image img ) {
 		
 		int h = img.getHeight();
 		int w = img.getWidth();
