@@ -1,8 +1,9 @@
 package GATIS;
 
-public class Math {
+public class MyMath {
 
-	
+
+	final static int decimalArraySize = 10;
 	
 	static int binaryToDecimal(int[] n) 
     { 
@@ -36,11 +37,11 @@ public class Math {
             n = n / 2; 
             i++; 
         } 
-        int[] binaryArray = new int[i];
+        int[] binaryArray = new int[decimalArraySize];
         // printing binary array in reverse order 
         for (int j = 0; j < i; j++) {
             binaryArray[j] =  binaryNum[i-j-1];
-            System.out.print(binaryArray[j]);
+            //System.out.print(binaryArray[j]);
         }
         return binaryArray;
     }
@@ -49,7 +50,7 @@ public class Math {
         int n = 17; 
         decToBinary(n); 
         int[] num = {1,0,0,0,1};
-        System.out.println(binaryToDecimal(num));
+        //System.out.println(binaryToDecimal(num));
         
     }
 	

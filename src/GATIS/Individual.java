@@ -2,37 +2,45 @@ package GATIS;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 import image.Image;
 
-public class Individual implements Comparable{
+public class Individual implements Comparable<Object>{
 	//CONSTANTS
 	final int decimalArraySize = 10;
-	
+	final float[] interval = {0,45,120,210,256};
 	//PROPERTIES
+
 	Circle c1;
 	Circle c2;
-	float score;
+	double score;
 	
 	//UTILITIES
 	Random r = new Random();
 	
 	
-	
 	//METHODS
+	
 	Individual(Image img){
+
 		c1 = new Circle((int)(r.nextFloat()*img.getWidth()),(int)(r.nextFloat()*img.getHeight()),(int)(r.nextFloat()*img.getWidth()*1/2));
 		c2 = new Circle((int)(r.nextFloat()*img.getWidth()),(int)(r.nextFloat()*img.getHeight()),(int)(r.nextFloat()*img.getWidth()*1/2));
-	}
-	Individual(Circle l , Circle r){
-		c1 = l;
-		c2 = r;
-		//COLOCAR CALCULO DO SCORE
+		fitness(img);
 	}
 	
-	public float getScore() {
+	Individual(Circle l , Circle r, Image img){
+		c1 = l;
+		c2 = r;
+		fitness(img);
+	}
+	
+	@Override
+	public int compareTo(Object o) {
+		return (this.getScore() < ((Individual) o).getScore() ? -1 : (this.getScore() == ((Individual) o).getScore() ? 0 : 1));
+	}
+	
+	public double getScore() {
 		return score;
 	}
 	
@@ -43,15 +51,89 @@ public class Individual implements Comparable{
 			return c2;
 	}
 	
-	void fitness() {
+	void fitness(Image img) {
+		//COLORS: 0 15 30 | 45 60 75 90 105 | 120 135 150 165 180 195	| 210 225 240 255
+		//WEIGHT:  -100          50                     100                   -100
+		
+
+		int bw = -200;
+		int sw = 5;
+		int hw = 10;
+		int ww = -100;
+		int interw = -50;
+		int wt = bw+sw+hw+ww;
+		
+		int[] vol = new int[4];
+		
+		vol = getPixelVol(img);
+
+		int b = vol[0]; 
+		int s = vol[1];
+		int h = vol[2];
+		int w = vol[3];
+		int inter = interceptVol(img);
+		int total = vol[0]+vol[1]+vol[2]+vol[3];
+		
+		score = (bw*b+sw*s+hw*h+ww*w+interw*inter)/total*wt;
+		
+		//System.out.println("Score : "+score);
+		
+		
 		
 	}
 	
-	@Override
-	public int compareTo(Object o) {
-		return (this.getScore() < ((Individual) o).getScore() ? -1 : (this.getScore() == ((Individual) o).getScore() ? 0 : 1));
-	}  
-
+	Boolean intercept(int x, int y) {
+		
+		int rad1 = c1.getRadius()*c1.getRadius();
+		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());
+		int rad2 = c2.getRadius()*c2.getRadius();
+		int cir2 = (x - c2.getX())*(x - c2.getX()) + (y - c2.getY())*(y - c2.getY());
+		
+		if(cir1 <= rad1 && cir2 <=rad2)
+			return true;
+		else
+			return false;
+		
+	}
+	
+	int interceptVol(Image img) {
+			
+		int sum = 0 ;
+		
+		for(int i = 0 ; i < img.getHeight(); i++) {
+			for(int j = 0 ; j < img.getWidth(); j++) {
+				
+				if(intercept(j,i))
+					sum++;
+			}
+		}
+		return sum;
+	}
+	
+	int[] getPixelVol(Image img) {
+		
+		int[] sum= new int[4];
+		double pix;
+		for(int i = 0; i < img.getHeight()-1; i++) {
+			for(int j = 0 ; j < img.getWidth()-1; j++) {
+				if(contains(j,i)) {				
+					pix = img.getPixel(j, i);
+					if(pix >= interval[0] && pix < interval[1]) {
+						sum[0]++;
+					}else if (pix >= interval[1] && pix < interval[2]) {
+						sum[1]++;
+					}else if(pix >= interval[2] &&  pix < interval[3]) {
+						sum[2]++;
+					}else {
+						sum[3]++;
+					}
+				}
+			}
+		}
+		
+		return sum;
+	}
+  
 	Boolean contains(int x, int y) {
 		
 		int rad1 = c1.getRadius()*c1.getRadius();
@@ -64,30 +146,6 @@ public class Individual implements Comparable{
 			return true;
 		else
 			return false;
-	}
-	
-	void lessQual(Image img) {
-		
-
-		
-		int h = img.getHeight();
-		int w = img.getWidth();
-		int qntInter = 17; //1,3,5,17, 51, 85 
-		
-		ArrayList<Integer> interval = new ArrayList<Integer>();
-		for(int i = 0 ; i < qntInter ; i++) {
-			interval.add(277/qntInter*i);
-		}
-		for(int i = 0 ; i < h-1; i++) {
-			for(int j = 0 ; j < w-1 ; j++) {
-				for(int z = 0 ; z < qntInter-1 ; z++) {
-					if(img.getPixel(j, i)>=interval.get(z) && (img.getPixel(j, i) <= interval.get(z+1))) {
-						img.setPixelAllBands(j, i, interval.get(z));
-					}						
-				}					
-			}
-		}
-		
 	}
 	
 
@@ -112,6 +170,7 @@ public class Individual implements Comparable{
 
 		Individual a = new Individual(img);
 		a.draw(test);
+		a.fitness(img);
 		
 		//a.lessQual(test);
 		

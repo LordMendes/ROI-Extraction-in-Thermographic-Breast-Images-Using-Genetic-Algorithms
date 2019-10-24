@@ -18,20 +18,20 @@ public class Circle {
 	Circle(int x, int y, int r){
 		
 		cX = x;
-		bX = Math.decToBinary(cX);
+		bX = MyMath.decToBinary(cX);
 		cY = y;
-		bY = Math.decToBinary(cY);
+		bY = MyMath.decToBinary(cY);
 		radius = r;			
-		bR = Math.decToBinary(radius);
+		bR = MyMath.decToBinary(radius);
 	}
 	
 	Circle(int[] x, int[] y, int[] r){
 		
-		cX = Math.binaryToDecimal(x);
+		cX = MyMath.binaryToDecimal(x);
 		bX = x;
-		cY = Math.binaryToDecimal(y);
+		cY = MyMath.binaryToDecimal(y);
 		bY = y;
-		radius = Math.binaryToDecimal(r);			
+		radius = MyMath.binaryToDecimal(r);			
 		bR = r;
 	}
 	
@@ -71,17 +71,17 @@ public class Circle {
 
 	void setX(int[] x) {
 		bX = x;
-		cX = Math.binaryToDecimal(x);
+		cX = MyMath.binaryToDecimal(x);
 	}
 	
 	void setY(int[] y) {
 		bY = y;
-		cY = Math.binaryToDecimal(y);
+		cY = MyMath.binaryToDecimal(y);
 	}
 	
 	void setR(int[] r) {
 		bR = r;
-		radius = Math.binaryToDecimal(r);
+		radius = MyMath.binaryToDecimal(r);
 	}
 	
 	void setPosition(int x , int y) {
