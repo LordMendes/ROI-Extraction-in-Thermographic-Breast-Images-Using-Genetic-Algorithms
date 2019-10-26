@@ -5,17 +5,18 @@ public class Circle {
 	final int decimalArraySize = 10;
 	
 	//ATTRIBUTES
-	int cX;
-	int[] bX = new int[decimalArraySize];
-	int cY;
-	int[] bY = new int[decimalArraySize];
-	int radius;
-	int[] bR = new int[decimalArraySize];
+	int cX;									//X - coordinate form the circle center
+	int[] bX = new int[decimalArraySize];	// conversion the cX variable to binary
+	int cY;									//Y - coordinate form the circle center
+	int[] bY = new int[decimalArraySize];	// conversion the cY variable to binary
+	
+	int radius;								// circules's radius length 
+	int[] bR = new int[decimalArraySize];	// conversion radius to binary
 	
 	
 	
 	
-	Circle(int x, int y, int r){
+	Circle(int x, int y, int r){			//constructor with decimal numbers parameters 
 		
 		cX = x;
 		bX = MyMath.decToBinary(cX);
@@ -25,7 +26,7 @@ public class Circle {
 		bR = MyMath.decToBinary(radius);
 	}
 	
-	Circle(int[] x, int[] y, int[] r){
+	Circle(int[] x, int[] y, int[] r){		//constructor with binary numbers parameters 
 		
 		int test = MyMath.binaryToDecimal(r);
 		if(test > 100) {
@@ -47,7 +48,7 @@ public class Circle {
 		bR = r;
 	}
 	
-	Circle(Circle c){
+	Circle(Circle c){				//constructor with Circle's object parameter 
 		setX(c.getBx());
 		setY(c.getBy());
 		radius = c.getRadius();
@@ -57,6 +58,7 @@ public class Circle {
 		
 	}
 	
+	//getters
 	int getX() {
 		return cX;
 	}
@@ -81,6 +83,7 @@ public class Circle {
 		return bR;
 	}
 
+	//setters
 	void setX(int[] x) {
 		bX = x;
 		cX = MyMath.binaryToDecimal(x);

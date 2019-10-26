@@ -1,7 +1,6 @@
 package GATIS;
 
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import image.Image;
@@ -21,26 +20,26 @@ public class Individual implements Comparable<Object>{
 	
 	
 	//METHODS
-	
-	Individual(Image img){
-
+	Individual(Image img){ 	// constructors get a random image size form the image as parameter to make the circles 
+		
 		c1 = new Circle((int)(r.nextFloat()*img.getWidth()),(int)(r.nextFloat()*img.getHeight()),(int)(r.nextFloat()*img.getWidth()*1/2));
 		c2 = new Circle((int)(r.nextFloat()*img.getWidth()),(int)(r.nextFloat()*img.getHeight()),(int)(r.nextFloat()*img.getWidth()*1/2));
-		fitness(img);
+		fitness(img); 
 	}
 	
-	Individual(Circle l , Circle r, Image img){
+	Individual(Circle l , Circle r, Image img){ // constructor using circles as parameters
 		c1 = l;
 		c2 = r;
 		fitness(img);
 	}
 	
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Object o) { // method compare, made to help sort the individuals grups
 		return (this.getScore() < ((Individual) o).getScore() ? -1 : (this.getScore() == ((Individual) o).getScore() ? 0 : 1));
 	}
-	
-	public double getScore() {
+	 
+	// geters-----------------
+	public double getScore() { 
 		return score;
 	}
 	
@@ -50,6 +49,7 @@ public class Individual implements Comparable<Object>{
 		else
 			return c2;
 	}
+	//------------------------
 	
 	void fitness(Image img) {
 		//COLORS: 0 15 30 | 45 60 75 90 105 | 120 135 150 165 180 195	| 210 225 240 255
@@ -100,10 +100,11 @@ public class Individual implements Comparable<Object>{
 			
 		int sum = 0 ;
 		
-		for(int i = 0 ; i < img.getHeight(); i++) {
+		for(int i = 0 ; i < img.getHeight(); i++) {  //using the "for" structures to run by the image as 
+													//"i" and "j" being the pixel coordinates.
 			for(int j = 0 ; j < img.getWidth(); j++) {
 				
-				if(intercept(j,i))
+				if(intercept(j,i))					//verify if the coordinates are intercepted inside the two circles 
 					sum++;
 			}
 		}
@@ -114,9 +115,10 @@ public class Individual implements Comparable<Object>{
 		
 		int[] sum= new int[4];
 		double pix;
-		for(int i = 0; i < img.getHeight()-1; i++) {
+		for(int i = 0; i < img.getHeight()-1; i++) {        //using the "for" structures to run by the image as 
+															//"i" and "j" being the pixel coordinates.
 			for(int j = 0 ; j < img.getWidth()-1; j++) {
-				if(contains(j,i)) {				
+				if(contains(j,i)) {									//verify if the coordinates are inside one of the circles 
 					pix = img.getPixel(j, i);
 					if(pix >= interval[0] && pix < interval[1]) {
 						sum[0]++;
@@ -136,14 +138,14 @@ public class Individual implements Comparable<Object>{
   
 	Boolean contains(int x, int y) {
 		
-		int rad1 = c1.getRadius()*c1.getRadius();
-		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());
+		int rad1 = c1.getRadius()*c1.getRadius();									   // calculate the r^2 from the circle (limit of the circle)
+		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 
 		int rad2 = c2.getRadius()*c2.getRadius();
 		int cir2 = (x - c2.getX())*(x - c2.getX()) + (y - c2.getY())*(y - c2.getY());
 		
 		
-		if(cir1<=rad1 || cir2 <= rad2)
-			return true;
+		if(cir1<=rad1 || cir2 <= rad2)	// if the distance of the coordinates to the the center is smaller or equal they are 
+			return true;				// inside one of the circles, if the distance are greater
 		else
 			return false;
 	}

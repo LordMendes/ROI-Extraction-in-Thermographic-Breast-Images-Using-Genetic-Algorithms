@@ -1,11 +1,11 @@
 package GATIS;
 
-public class MyMath {
+public class MyMath {								//Class of math's operations that we will use
 
 
-	final static int decimalArraySize = 10;
+	final static int decimalArraySize = 10;			//number of bits 
 	
-	static int binaryToDecimal(int[] n) 
+	static int binaryToDecimal(int[] n) 			//transforms a binary number into decimal
     { 
 		int[] num = n; 
 	    int dec_value = 0; 
@@ -24,7 +24,7 @@ public class MyMath {
 	} 
   
 	
-	static int[] decToBinary(int n) 
+	static int[] decToBinary(int n) 				//transforms a decimal number into binary 
     { 
         // array to store binary number 
         int[] binaryNum = new int[32]; 
