@@ -1,7 +1,6 @@
 package GATIS;
 
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import image.Image;
@@ -9,7 +8,7 @@ import image.Image;
 public class Individual implements Comparable<Object>{
 	//CONSTANTS
 	final int decimalArraySize = 10;
-	final float[] interval = {0,45,120,210,256};
+	final float[] interval = {0,45,140,200,256};
 	//PROPERTIES
 
 	Circle c1;
@@ -23,9 +22,22 @@ public class Individual implements Comparable<Object>{
 	//METHODS
 	
 	Individual(Image img){
-
-		c1 = new Circle((int)(r.nextFloat()*img.getWidth()),(int)(r.nextFloat()*img.getHeight()),(int)(r.nextFloat()*img.getWidth()*1/2));
-		c2 = new Circle((int)(r.nextFloat()*img.getWidth()),(int)(r.nextFloat()*img.getHeight()),(int)(r.nextFloat()*img.getWidth()*1/2));
+		
+		int x,y,rr;
+		
+		x=(int)(r.nextFloat()*img.getWidth());
+		y=(int)(r.nextFloat()*img.getHeight());
+		rr=(int)(r.nextFloat()*img.getWidth()*1/2);
+		//System.out.println("Raio 1 : "+rr);
+		
+		c1 = new Circle(x,y,rr);
+		x=(int)(r.nextFloat()*img.getWidth());
+		y=(int)(r.nextFloat()*img.getHeight());
+		rr=(int)(r.nextFloat()*img.getWidth()*1/2);
+		
+		//System.out.println("Raio 2 : "+rr);
+		c2 = new Circle(x,y,rr);
+		//System.out.print("raio no c : "+c2.getRadius());
 		fitness(img);
 	}
 	
@@ -56,17 +68,17 @@ public class Individual implements Comparable<Object>{
 		//WEIGHT:  -100          50                     100                   -100
 		
 
-		int bw = -200;
-		int sw = 5;
-		int hw = 10;
-		int ww = -100;
-		int interw = -50;
-		int wt = bw+sw+hw+ww;
 		
+		int bw = -20;
+		int sw = 5;
+		int hw = 20;
+		int ww = -100;
+		int interw = 2;
+		int wt = bw+sw+hw+ww;
 		int[] vol = new int[4];
 		
 		vol = getPixelVol(img);
-
+		
 		int b = vol[0]; 
 		int s = vol[1];
 		int h = vol[2];
@@ -74,9 +86,8 @@ public class Individual implements Comparable<Object>{
 		int inter = interceptVol(img);
 		int total = vol[0]+vol[1]+vol[2]+vol[3];
 		
-		score = Math.abs((bw*b+sw*s+hw*h+ww*w+interw*inter)/total);
+		score = /*Math.abs*/(bw*b+sw*s+hw*h+ww*w+interw*inter);
 		
-		//System.out.println("Score : "+score);
 		
 		
 		
@@ -165,7 +176,7 @@ public class Individual implements Comparable<Object>{
 	
 	public static void main(String[]args) throws Exception{
 		
-		Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img1.jpg");
+		Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img2.jpg");
 		Image test = new Image(img);
 
 		Individual a = new Individual(img);

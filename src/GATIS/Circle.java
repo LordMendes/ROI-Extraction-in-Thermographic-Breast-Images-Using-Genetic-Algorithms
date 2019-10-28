@@ -23,21 +23,19 @@ public class Circle {
 		bY = MyMath.decToBinary(cY);
 		radius = r;			
 		bR = MyMath.decToBinary(radius);
+
 	}
 	
 	Circle(int[] x, int[] y, int[] r){
 		
-		int test = MyMath.binaryToDecimal(r);
-		if(test > 100) {
-			r = MyMath.decToBinary(100);
-		}
-		test = MyMath.binaryToDecimal(y);
-		if(test > 350) {
-			y = MyMath.decToBinary(350);
-		}else if(test < 50) {
-			y = MyMath.decToBinary(50);
-		}	
 		
+		if(MyMath.binaryToDecimal(r) > 100) {
+			r = MyMath.decToBinary(100);
+		}if(MyMath.binaryToDecimal(y) < 75) {
+			y = MyMath.decToBinary(75);
+		}if(MyMath.binaryToDecimal(y) > 420) {
+			y = MyMath.decToBinary(420);
+		}
 		
 		cX = MyMath.binaryToDecimal(x);
 		bX = x;
@@ -106,5 +104,12 @@ public class Circle {
 		bR = MyMath.decToBinary(r);
 	}
 	
+	public static void main(String[]args) {
+		Circle a = new Circle(100,100,100);
+		int[]c = a.getBx();
+		for(int i = 0 ; i <10;i++) {
+			System.out.print(c[i]);
+		}
+	}
 
 }
