@@ -11,7 +11,7 @@ public class GA {
 	//CONSTANTS
 	final int decimalArraySize = 10;
 	final static int POP = 40;
-	final int GEN = 20;
+	final int GEN = 40;
 	final float mR = 0.02f;
 	final float cR = 0.7f;
 	//ATTRIBUTES
@@ -21,6 +21,7 @@ public class GA {
 	
 	
 	void initPop(Image img) {
+		pop.clear();
 		for(int i = 0 ; i < POP ; i++) {
 			Individual a = new Individual(img);
 			pop.add(a);
@@ -115,14 +116,14 @@ public class GA {
 				auxRr2[i] = r1.getBr()[i];
 			}
 		}
-		/*A CHECAR A VALIDADE DESSA LIMITAÇÃO
+		//A CHECAR A VALIDADE DESSA LIMITAÇÃO
 		if(MyMath.binaryToDecimal(auxXl) > img.getWidth()/2) {
 			auxXl = MyMath.decToBinary(img.getWidth()/2);
 		}
 		if(MyMath.binaryToDecimal(auxXr) < img.getWidth()/2) {
 			auxXl = MyMath.decToBinary(img.getWidth()/2);
 		}
-		*/	
+			
 		Circle cl = new Circle(auxXl, auxYl, auxRl);
 		Circle cr = new Circle(auxXr, auxYr, auxRr);
 		Circle cl2 = new Circle(auxXl2, auxYl2, auxRl2);
@@ -251,21 +252,21 @@ public class GA {
 		
 		initPop(img);
 		int n = 0;
-		Individual elite = new Individual(img);
-		ArrayList<Individual> popAux = new ArrayList<Individual>();
+		Individual elite;
 		
 		float m;
 		float c;
 		
-		Individual a1 = null;
-		Individual a2 = null;
+		Individual a1;
+		Individual a2;
 		Individual[] children = new Individual[2];
-		
+		ArrayList<Individual> popAux = new ArrayList<Individual>(POP);
 		while(n < GEN) {
+			
 			int t=0;	
 			elite = pop.get(0);
-			
 			while(t <= (POP/2)) {
+
 				
 				m = r.nextFloat();
 				c = r.nextFloat();
@@ -276,7 +277,11 @@ public class GA {
 					children = crossover(a1,a2,img);
 				}
 				if(m < mR) {
-					mutation(a1);
+					mutation(children[0]);
+				}
+				m = r.nextFloat();
+				if(m < mR) {
+					mutation(children[1]);
 				}
 				
 				popAux.add(children[0]);
@@ -294,7 +299,6 @@ public class GA {
 			
 			pop.clear();
 			pop.addAll(popAux);
-			popAux.clear();
 			//System.out.print("Geração "+n+" -> ");
 			//printBest();
 			//printAll();
@@ -312,9 +316,12 @@ public class GA {
 		//a.lessQual(img);
 		for(int i = 0 ; i < 5 ; i++) {
 			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img2.jpg");
+			img.convertToRGB();
 			a.run(img);
-			pop.get(0).draw(img);
+			pop.get(POP-1).draw(img);
 			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
+
+			System.out.println("Ga : "+i);
 		}
 	
 	}

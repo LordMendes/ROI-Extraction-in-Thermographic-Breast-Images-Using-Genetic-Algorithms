@@ -5,17 +5,18 @@ public class Circle {
 	final int decimalArraySize = 10;
 	
 	//ATTRIBUTES
-	int cX;
-	int[] bX = new int[decimalArraySize];
-	int cY;
-	int[] bY = new int[decimalArraySize];
-	int radius;
-	int[] bR = new int[decimalArraySize];
+	int cX;									//X - coordinate form the circle center
+	int[] bX = new int[decimalArraySize];	// conversion the cX variable to binary
+	int cY;									//Y - coordinate form the circle center
+	int[] bY = new int[decimalArraySize];	// conversion the cY variable to binary
+	
+	int radius;								// circules's radius length 
+	int[] bR = new int[decimalArraySize];	// conversion radius to binary
 	
 	
 	
 	
-	Circle(int x, int y, int r){
+	Circle(int x, int y, int r){			//constructor with decimal numbers parameters 
 		
 		cX = x;
 		bX = MyMath.decToBinary(cX);
@@ -26,14 +27,19 @@ public class Circle {
 
 	}
 	
-	Circle(int[] x, int[] y, int[] r){
+	Circle(int[] x, int[] y, int[] r){		//constructor with binary numbers parameters 
 		
-		
-		if(MyMath.binaryToDecimal(r) > 100) {
+
+		if(MyMath.binaryToDecimal(r) > 200) {
+			r = MyMath.decToBinary(200);
+		}
+		if(MyMath.binaryToDecimal(r) < 100) {
 			r = MyMath.decToBinary(100);
-		}if(MyMath.binaryToDecimal(y) < 75) {
-			y = MyMath.decToBinary(75);
-		}if(MyMath.binaryToDecimal(y) > 420) {
+		}
+		if(MyMath.binaryToDecimal(y) < 125) {
+			y = MyMath.decToBinary(125);
+		}
+		if(MyMath.binaryToDecimal(y) > 420) {
 			y = MyMath.decToBinary(420);
 		}
 		
@@ -45,7 +51,7 @@ public class Circle {
 		bR = r;
 	}
 	
-	Circle(Circle c){
+	Circle(Circle c){				//constructor with Circle's object parameter 
 		setX(c.getBx());
 		setY(c.getBy());
 		radius = c.getRadius();
@@ -55,6 +61,7 @@ public class Circle {
 		
 	}
 	
+	//getters
 	int getX() {
 		return cX;
 	}
@@ -79,6 +86,7 @@ public class Circle {
 		return bR;
 	}
 
+	//setters
 	void setX(int[] x) {
 		bX = x;
 		cX = MyMath.binaryToDecimal(x);
