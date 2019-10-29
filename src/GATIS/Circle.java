@@ -30,10 +30,10 @@ public class Circle {
 	Circle(int[] x, int[] y, int[] r){		//constructor with binary numbers parameters 
 		
 
-		if(MyMath.binaryToDecimal(r) > 200) {
+		if(MyMath.binaryToDecimal(r) > 175) {
 			r = MyMath.decToBinary(200);
 		}
-		if(MyMath.binaryToDecimal(r) < 100) {
+		if(MyMath.binaryToDecimal(r) < 50) {
 			r = MyMath.decToBinary(100);
 		}
 		if(MyMath.binaryToDecimal(y) < 125) {

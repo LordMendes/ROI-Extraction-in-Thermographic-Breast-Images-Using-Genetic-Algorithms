@@ -118,10 +118,10 @@ public class GA {
 		}
 		//A CHECAR A VALIDADE DESSA LIMITAÇÃO
 		if(MyMath.binaryToDecimal(auxXl) > img.getWidth()/2) {
-			auxXl = MyMath.decToBinary(img.getWidth()/2);
+			auxXl = MyMath.decToBinary((img.getWidth()-1)/2);
 		}
 		if(MyMath.binaryToDecimal(auxXr) < img.getWidth()/2) {
-			auxXl = MyMath.decToBinary(img.getWidth()/2);
+			auxXl = MyMath.decToBinary((img.getWidth()-1)/2);
 		}
 			
 		Circle cl = new Circle(auxXl, auxYl, auxRl);
@@ -211,13 +211,19 @@ public class GA {
 	
 	Individual tournament() {
 		
-		int x1 = r.nextInt(POP-1);
-		int x2 = r.nextInt(POP-1);
-		
-		Individual a1 = pop.get(x1);
-		Individual a2 = pop.get(x2);
-		
-		if(a1.getScore() >= a2.getScore())
+		int x1 ;
+		int x2 ;
+		Individual a1=null;
+		Individual a2=null;
+		while(a1 == null) {
+			x1 = r.nextInt(POP-1);
+			a1 = pop.get(x1);
+		}
+		while(a2 == null) {
+			x2 = r.nextInt(POP-1);
+			a2 = pop.get(x2);
+		}
+		if(a1.getScore() >= a2.getScore())			
 			return a1;
 		else
 			return a2;
@@ -299,29 +305,29 @@ public class GA {
 			
 			pop.clear();
 			pop.addAll(popAux);
-			//System.out.print("Geração "+n+" -> ");
-			//printBest();
-			//printAll();
 			
 			n++;
 			
 		}
+		
 	}
 	
 	public static void main(String[]args) throws Exception {
 		GA a = new GA();
 		
 		
-		//a.initPop(img);
-		//a.lessQual(img);
-		for(int i = 0 ; i < 5 ; i++) {
+		
+		
+		for(int i = 0 ; i < 10 ; i++) {
 			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img2.jpg");
+			a.lessQual(img);
 			img.convertToRGB();
 			a.run(img);
 			pop.get(POP-1).draw(img);
 			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
-
-			System.out.println("Ga : "+i);
+			
+			System.out.print("Ga : "+i);
+			System.out.println(" | Melhor Fitness : "+pop.get(POP-1).getScore());
 		}
 	
 	}

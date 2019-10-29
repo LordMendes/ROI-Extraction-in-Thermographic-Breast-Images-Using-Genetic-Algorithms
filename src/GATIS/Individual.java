@@ -73,24 +73,28 @@ public class Individual implements Comparable<Object>{
 		//WEIGHT:  -100          50                     100                   -100
 		
 		int bw = -250;
-		int sw = 5;
-		int hw = 100;
-		int ww = -200;
-		int interw = -50;
+		int sw = 50;
+		int hw = 250;
+		int ww = -275;
 		int wt = bw+sw+hw+ww;
-		
+		int interw;		
 		int[] vol = new int[4];
 		
 		vol = getPixelVol(img);
+
+		int inter = interceptVol(img);
+		if(inter > 50) 
+			interw = -10;
+		else
+			interw = 10;
 
 		int b = vol[0]; 
 		int s = vol[1];
 		int h = vol[2];
 		int w = vol[3];
-		int inter = interceptVol(img);
 		int total = vol[0]+vol[1]+vol[2]+vol[3];
 		
-		score = total - (bw*b+sw*s+hw*h+ww*w+interw*inter);	
+		score = (bw*b+sw*s+hw*h+ww*w+interw*inter)/Math.abs(wt);	
 		
 		
 		
