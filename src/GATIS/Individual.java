@@ -41,6 +41,7 @@ public class Individual implements Comparable<Object>{
 		c2 = new Circle(x,y,rr);
 		//System.out.print("raio no c : "+c2.getRadius());
 		fitness(img);
+
 	}
 	
 	Individual(Circle l , Circle r, Image img){ // constructor using circles as parameters

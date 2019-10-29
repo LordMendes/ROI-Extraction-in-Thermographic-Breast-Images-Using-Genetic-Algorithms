@@ -26,80 +26,6 @@ public class MyMath {								//Class of math's operations that we will use
 	    return (dec_value); 
 	} 
 	
-	static float pow(int base, int pot) {
-		float r=base;
-		/*
-		for(int i = 0 ; i < pot-1 ; i++) {
-			r=r*r;
-		}*/
-		return (base^pot);
-	}
-	
-	static double converte_gray_dec(int[]gray)
-	{
-	    int[]bin = new int[decimalArraySize];
-	    int i= decimalArraySize-1;
-	    while(i>0)
-	    {
-	        if(i==(decimalArraySize-1))
-	        {
-	            bin[i]=gray[i];
-	        }
-	        else
-	        {
-	            bin[i]=(int) pow(gray[i],bin[i+1]);
-	        }
-	        i--;
-	    }
-	    bin[0] = gray[0];
-	    double dec =0;
-	    for(int h =0, j=(decimalArraySize-1); j>0; h++,j--)
-	    {
-	        dec += bin[j]*pow(2,h);
-	    }
-	    dec = dec/10000;
-	        return dec;
-
-	}
-	
-	static int[] converte_dec_gray(double x)
-	{
-	    float decf = (float) (x*1000);
-	    int dec = (int) decf;
-	    int[]bin = new int[decimalArraySize];
-	   /* if(dec>0)
-	        bin[0] =0;
-	    else
-	    {
-	        bin[0] = 1;
-	        dec = -dec;
-	    }*/
-	    for(int i =(decimalArraySize-1); i>0; i--)
-	    {
-	        bin[i] = dec%2;
-	        dec = dec/2;
-	    }
-
-	    int[]gray = new int[decimalArraySize];
-	    int i= decimalArraySize-1;
-	    while(i>0)
-	    {
-	        if(i==(decimalArraySize-1))
-	        {
-	            gray[i]=bin[i];
-	        }
-	        else
-	        {
-	            gray[i]=bin[i]^bin[i+1];
-	        }
-	        i--;
-	    }
-	    gray[0] = bin[0];
-
-
-	    return gray;
-	}
-	
 	static int[] decToBinary(int n) 				//transforms a decimal number into binary 
     { 
         // array to store binary number 
@@ -127,15 +53,6 @@ public class MyMath {								//Class of math's operations that we will use
 	
 	public static void main(String[] args){ 
         int[] s = {0,0,0,1,1,0,0,1,0,0};
-        double g = converte_gray_dec(s);
-        int[] a = converte_dec_gray(100);
-        
-        System.out.println(g);
-        
-        for(int i = 0 ; i < decimalArraySize ; i++) {
-        	System.out.print(a[i]);
-        }
-        
     }
 	
 	
