@@ -72,21 +72,23 @@ public class Individual implements Comparable<Object>{
 		//COLORS: 0 15 30 | 45 60 75 90 105 | 120 135 150 165 180 195	| 210 225 240 255
 		//WEIGHT:  -100          50                     100                   -100
 		
-		int bw = -250;
-		int sw = 50;
-		int hw = 250;
-		int ww = -275;
-		int wt = bw+sw+hw+ww;
+		int bw = -2500;
+		int sw = 135;
+		int hw = 500;
+		int ww = -475;
+
+		int inter = interceptVol(img);
 		int interw;		
+		if(inter > 50) 
+			interw = -1000;
+		else
+			interw = 100;
+		int wt = bw+sw+hw+ww+interw;
 		int[] vol = new int[4];
 		
 		vol = getPixelVol(img);
 
-		int inter = interceptVol(img);
-		if(inter > 50) 
-			interw = -10;
-		else
-			interw = 10;
+		
 
 		int b = vol[0]; 
 		int s = vol[1];
@@ -94,7 +96,7 @@ public class Individual implements Comparable<Object>{
 		int w = vol[3];
 		int total = vol[0]+vol[1]+vol[2]+vol[3];
 		
-		score = (bw*b+sw*s+hw*h+ww*w+interw*inter)/Math.abs(wt);	
+		score = (bw*b+sw*s+hw*h+ww*w+interw*inter)/Math.abs(wt+total);	
 		
 		
 		

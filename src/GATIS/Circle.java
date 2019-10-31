@@ -29,7 +29,7 @@ public class Circle {
 	
 	Circle(int[] x, int[] y, int[] r){		//constructor with binary numbers parameters 
 		
-
+/*
 		if(MyMath.binaryToDecimal(r) > 175) {
 			r = MyMath.decToBinary(200);
 		}
@@ -42,7 +42,7 @@ public class Circle {
 		if(MyMath.binaryToDecimal(y) > 420) {
 			y = MyMath.decToBinary(420);
 		}
-		
+	*/	
 		cX = MyMath.binaryToDecimal(x);
 		bX = x;
 		cY = MyMath.binaryToDecimal(y);

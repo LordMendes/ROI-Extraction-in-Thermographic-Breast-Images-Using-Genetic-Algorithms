@@ -51,9 +51,34 @@ public class MyMath {								//Class of math's operations that we will use
         return binaryArray;
     }
 	
-	public static void main(String[] args){ 
-        int[] s = {0,0,0,1,1,0,0,1,0,0};
-    }
 	
+	static int[] BinarytoGray(int[] n){
+		
+		int [] vectorGray = new int[decimalArraySize];
+		
+		vectorGray[0] = n[0];
+		
+		for(int i = 1; i< decimalArraySize;i++){
+			
+			if(n[i]==n[i-1])
+			vectorGray[i] = 0;
+			else
+			vectorGray[i] = 1;
+		}
+		
+		return vectorGray;
+	}
+	
+	public static void main(String[] args){ 
+        int[] s = {1,1,1,1,0,0,0,0,1,0};
+        
+        for(int n : s) 
+        System.out.print(n);
+        
+        System.out.println();
+        
+        for(int n : BinarytoGray(s)) 
+            System.out.print(n);
+    }
 	
 }
