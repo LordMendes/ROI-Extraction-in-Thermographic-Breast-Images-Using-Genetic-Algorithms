@@ -215,14 +215,15 @@ public class GA {
 		int x2 ;
 		Individual a1=null;
 		Individual a2=null;
-		while(a1 == null) {
+		//while(a1 == null) {
 			x1 = r.nextInt(POP-1);
 			a1 = pop.get(x1);
-		}
-		while(a2 == null) {
+		//}
+		//while(a2 == null) {
 			x2 = r.nextInt(POP-1);
 			a2 = pop.get(x2);
-		}
+		//}
+
 		if(a1.getScore() >= a2.getScore())			
 			return a1;
 		else
@@ -267,11 +268,13 @@ public class GA {
 		Individual a2;
 		Individual[] children = new Individual[2];
 		ArrayList<Individual> popAux = new ArrayList<Individual>(POP);
+		
 		while(n < GEN) {
+			popAux.clear();
 			
 			int t=0;	
 			elite = pop.get(0);
-			while(t <= (POP/2)) {
+			while(t <= (POP/2-1)) {
 
 				
 				m = r.nextFloat();
@@ -279,9 +282,13 @@ public class GA {
 				a1 = tournament();
 				a2 = tournament();
 				
+				children[0] = a1;
+				children[1] = a2;
 				if(c < cR) {
 					children = crossover(a1,a2,img);
 				}
+				
+				
 				if(m < mR) {
 					mutation(children[0]);
 				}
@@ -303,8 +310,10 @@ public class GA {
 			
 			
 			
+			
 			pop.clear();
 			pop.addAll(popAux);
+			System.out.println("bla" + pop.size());
 			
 			n++;
 			
