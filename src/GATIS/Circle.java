@@ -19,35 +19,22 @@ public class Circle {
 	Circle(int x, int y, int r){			//constructor with decimal numbers parameters 
 		
 		cX = x;
-		bX = MyMath.decToBinary(cX);
+		bX = MyMath.DectoGray(cX);
 		cY = y;
-		bY = MyMath.decToBinary(cY);
+		bY = MyMath.DectoGray(cY);
 		radius = r;			
-		bR = MyMath.decToBinary(radius);
+		bR = MyMath.DectoGray(radius);
 
 	}
 	
 	Circle(int[] x, int[] y, int[] r){		//constructor with binary numbers parameters 
 		
-/*
-		if(MyMath.binaryToDecimal(r) > 175) {
-			r = MyMath.decToBinary(200);
-		}
-		if(MyMath.binaryToDecimal(r) < 50) {
-			r = MyMath.decToBinary(100);
-		}
-		if(MyMath.binaryToDecimal(y) < 125) {
-			y = MyMath.decToBinary(125);
-		}
-		if(MyMath.binaryToDecimal(y) > 420) {
-			y = MyMath.decToBinary(420);
-		}
-	*/	
-		cX = MyMath.binaryToDecimal(x);
+	
+		cX = MyMath.GraytoDec(x);
 		bX = x;
-		cY = MyMath.binaryToDecimal(y);
+		cY = MyMath.GraytoDec(y);
 		bY = y;
-		radius = MyMath.binaryToDecimal(r);			
+		radius = MyMath.GraytoDec(r);			
 		bR = r;
 	}
 	
@@ -89,17 +76,17 @@ public class Circle {
 	//setters
 	void setX(int[] x) {
 		bX = x;
-		cX = MyMath.binaryToDecimal(x);
+		cX = MyMath.GraytoDec(x);
 	}
 	
 	void setY(int[] y) {
 		bY = y;
-		cY = MyMath.binaryToDecimal(y);
+		cY = MyMath.GraytoDec(y);
 	}
 	
 	void setR(int[] r) {
 		bR = r;
-		radius = MyMath.binaryToDecimal(r);
+		radius = MyMath.GraytoDec(r);
 	}
 	
 	void setPosition(int x , int y) {
@@ -109,7 +96,7 @@ public class Circle {
 	
 	void setRadius(int r) {
 		radius = r;
-		bR = MyMath.decToBinary(r);
+		bR = MyMath.DectoGray(r);
 	}
 	
 	public static void main(String[]args) {

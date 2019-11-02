@@ -117,11 +117,11 @@ public class GA {
 			}
 		}
 		//A CHECAR A VALIDADE DESSA LIMITAÇÃO
-		if(MyMath.binaryToDecimal(auxXl) > img.getWidth()/2) {
-			auxXl = MyMath.decToBinary((img.getWidth()-1)/2);
+		if(MyMath.GraytoDec(auxXl) > img.getWidth()/2) {
+			auxXl = MyMath.DectoGray((img.getWidth()-1)/2);
 		}
-		if(MyMath.binaryToDecimal(auxXr) < img.getWidth()/2) {
-			auxXl = MyMath.decToBinary((img.getWidth()-1)/2);
+		if(MyMath.GraytoDec(auxXr) < img.getWidth()/2) {
+			auxXl = MyMath.DectoGray((img.getWidth()-1)/2);
 		}
 			
 		Circle cl = new Circle(auxXl, auxYl, auxRl);

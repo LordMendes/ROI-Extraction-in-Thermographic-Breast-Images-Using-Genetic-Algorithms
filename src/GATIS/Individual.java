@@ -86,10 +86,8 @@ public class Individual implements Comparable<Object>{
 				
 				int interw;		
 				int[] vol = new int[4];
-				int[] volR=new int[4];
 				
 				vol = getPixelVol(img);
-				//volR =getPixelVolRings(img);
 				
 				int inter = interceptVol(img);
 				
