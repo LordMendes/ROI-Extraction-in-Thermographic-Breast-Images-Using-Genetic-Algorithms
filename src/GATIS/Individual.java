@@ -70,35 +70,43 @@ public class Individual implements Comparable<Object>{
 	
 	void fitness(Image img) {
 		//COLORS: 0 15 30 | 45 60 75 90 105 | 120 135 150 165 180 195	| 210 225 240 255
-		//WEIGHT:  -100          50                     100                   -100
-		
-		int bw = -2500;
-		int sw = 135;
-		int hw = 500;
-		int ww = -475;
+				//WEIGHT-C:  -100          50                     100                   -100
+				//WEIGHT-R:
+				int bw = -250;
+				int sw = 50;
+				int hw = 250;
+				int ww = -275;
+				int wt = bw+sw+hw+ww;
+				
+				int bwR =  250;
+				int swR = -20;
+				int hwR = -10;
+				int wwR =  275;
+				int wtR = bwR+swR+hwR+wwR;
+				
+				int interw;		
+				int[] vol = new int[4];
+				int[] volR=new int[4];
+				
+				vol = getPixelVol(img);
+				//volR =getPixelVolRings(img);
+				
+				int inter = interceptVol(img);
+				
+				if(inter > 50) 
+					interw = -50;
+				else
+					interw = 10;
 
-		int inter = interceptVol(img);
-		int interw;		
-		if(inter > 50) 
-			interw = -1000;
-		else
-			interw = 100;
-		int wt = bw+sw+hw+ww+interw;
-		int[] vol = new int[4];
-		
-		vol = getPixelVol(img);
-
-		
-
-		int b = vol[0]; 
-		int s = vol[1];
-		int h = vol[2];
-		int w = vol[3];
-		int total = vol[0]+vol[1]+vol[2]+vol[3];
-		
-		score = (bw*b+sw*s+hw*h+ww*w+interw*inter)/Math.abs(wt+total);	
-		
-		
+				int b = vol[0]; 
+				int s = vol[1];
+				int h = vol[2];
+				int w = vol[3];
+							
+				
+				int totalC = (bw*b+sw*s+hw*h+ww*w+interw*inter);
+				
+				score = (totalC)/Math.abs(wt+wtR+interw);	
 		
 	}
 	

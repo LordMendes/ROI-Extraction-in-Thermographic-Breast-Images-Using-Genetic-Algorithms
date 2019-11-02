@@ -313,7 +313,7 @@ public class GA {
 			
 			pop.clear();
 			pop.addAll(popAux);
-			System.out.println("bla" + pop.size());
+			
 			
 			n++;
 			

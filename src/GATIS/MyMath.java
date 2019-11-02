@@ -69,6 +69,37 @@ public class MyMath {								//Class of math's operations that we will use
 		return vectorGray;
 	}
 	
+	static int[] GraytoBinary(int[] n){
+		
+		int [] vectorBin = new int[decimalArraySize];
+		
+		vectorBin[0] = n[0];
+		
+		if(n[0]==n[1])
+			vectorBin[1] = 0;
+			else
+			vectorBin[1] = 1;
+		
+		for(int i = 1; i< decimalArraySize-1;i++){
+			
+			if(n[i+1]==vectorBin[i])
+				vectorBin[i+1] = 0;
+				else
+					vectorBin[i+1] = 1;
+		}
+		
+		return vectorBin;
+	}
+	
+	static int[] DectoGray(int n) {
+		
+		return BinarytoGray(decToBinary(n));
+	}
+	
+	static int GraytoDec(int[]n) {
+		return binaryToDecimal(GraytoBinary(n));
+	}
+	
 	public static void main(String[] args){ 
         int[] s = {1,1,1,1,0,0,0,0,1,0};
         
