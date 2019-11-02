@@ -10,8 +10,8 @@ import image.Image;
 public class GA {
 	//CONSTANTS
 	final int decimalArraySize = 10;
-	final static int POP = 50;
-	final int GEN = 50;
+	final static int POP = 30;
+	final int GEN = 40;
 	final float mR = 0.02f;
 	final float cR = 0.7f;
 	//ATTRIBUTES

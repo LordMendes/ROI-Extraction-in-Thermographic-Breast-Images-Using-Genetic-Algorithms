@@ -37,9 +37,7 @@ public class Individual implements Comparable<Object>{
 		y=(int)(r.nextFloat()*img.getHeight());
 		rr=(int)(r.nextFloat()*img.getWidth()*1/2);
 		
-		//System.out.println("Raio 2 : "+rr);
 		c2 = new Circle(x,y,rr);
-		//System.out.print("raio no c : "+c2.getRadius());
 		fitness(img);
 
 	}
@@ -78,12 +76,6 @@ public class Individual implements Comparable<Object>{
 				int ww = -275;
 				int wt = bw+sw+hw+ww;
 				
-				int bwR =  250;
-				int swR = -20;
-				int hwR = -10;
-				int wwR =  275;
-				int wtR = bwR+swR+hwR+wwR;
-				
 				int interw;		
 				int[] vol = new int[4];
 				
@@ -104,7 +96,7 @@ public class Individual implements Comparable<Object>{
 				
 				int totalC = (bw*b+sw*s+hw*h+ww*w+interw*inter);
 				
-				score = (totalC)/Math.abs(wt+wtR+interw);	
+				score = (totalC)/Math.abs(wt+interw);	
 		
 	}
 	
