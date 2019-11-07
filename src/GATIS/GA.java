@@ -11,7 +11,7 @@ public class GA {
 	//CONSTANTS
 	final int decimalArraySize = 10;
 	final static int POP = 50;
-	final int GEN = 50;
+	final int GEN = 60;
 	final float mR = 0.02f;
 	final float cR = 0.7f;
 	//ATTRIBUTES
@@ -45,25 +45,16 @@ public class GA {
 
 		Circle l1 = new Circle(a1.getCircle(1));
 		Circle l2 = new Circle(a2.getCircle(1));
-		Circle r1 = new Circle(a1.getCircle(2));
-		Circle r2 = new Circle(a2.getCircle(2));
 		
 		
 		int[]auxXl = new int[decimalArraySize];
 		int[]auxYl = new int[decimalArraySize];
 		int[]auxRl = new int[decimalArraySize];
 		
-		int[]auxXr = new int[decimalArraySize];
-		int[]auxYr = new int[decimalArraySize];
-		int[]auxRr = new int[decimalArraySize];
-		
 		int[]auxXl2 = new int[decimalArraySize];
 		int[]auxYl2 = new int[decimalArraySize];
 		int[]auxRl2 = new int[decimalArraySize];
 		
-		int[]auxXr2 = new int[decimalArraySize];
-		int[]auxYr2 = new int[decimalArraySize];
-		int[]auxRr2 = new int[decimalArraySize];
 		
 		int cutX = r.nextInt(decimalArraySize-1);
 		int cutY = r.nextInt(decimalArraySize-1);
@@ -92,45 +83,14 @@ public class GA {
 				auxRl2[i] = l1.getBr()[i];
 			}
 		}
-		//RIGHT CIRCLE
-		for(int i = 0 ; i < decimalArraySize ; i++) {
-			if(i < cutX) {
-				auxXr[i] = r1.getBx()[i];
-				auxXr2[i] = r2.getBx()[i];
-			}else {
-				auxXr[i] = r2.getBx()[i];
-				auxXr2[i] = r1.getBx()[i];
-			}
-			if(i < cutY) {
-				auxYr[i] = r1.getBy()[i];
-				auxYr2[i] = r2.getBy()[i];
-			}else {
-				auxYr[i] = r2.getBy()[i];
-				auxYr2[i] = r1.getBy()[i];
-			}
-			if(i < cutR) {
-				auxRr[i] = r1.getBr()[i];
-				auxRr2[i] = r2.getBr()[i];
-			}else {
-				auxRr[i] = r2.getBr()[i];
-				auxRr2[i] = r1.getBr()[i];
-			}
-		}
-		//A CHECAR A VALIDADE DESSA LIMITAÇÃO
-		if(MyMath.GraytoDec(auxXl) > img.getWidth()/2) {
-			auxXl = MyMath.DectoGray((img.getWidth()-1)/2);
-		}
-		if(MyMath.GraytoDec(auxXr) < img.getWidth()/2) {
-			auxXl = MyMath.DectoGray((img.getWidth()-1)/2);
-		}
+		
+		
 			
 		Circle cl = new Circle(auxXl, auxYl, auxRl);
-		Circle cr = new Circle(auxXr, auxYr, auxRr);
 		Circle cl2 = new Circle(auxXl2, auxYl2, auxRl2);
-		Circle cr2 = new Circle(auxXr2, auxYr2, auxRr2);
 		
-		Individual child = new Individual(cl,cr,img);
-		Individual child2 = new Individual(cl2,cr2,img);
+		Individual child = new Individual(cl,img);
+		Individual child2 = new Individual(cl2,img);
 		
 		
 		Individual[] children = new Individual[2];
@@ -329,11 +289,11 @@ public class GA {
 		
 		for(int i = 0 ; i < 10 ; i++) {
 			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img2.jpg");
-			a.lessQual(img);
+			//a.lessQual(img);
 			img.convertToRGB();
 			a.run(img);
 			pop.get(POP-1).draw(img);
-			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
+			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/saudavel"+i+".jpg", "jpg");
 			
 			System.out.print("Ga : "+i);
 			System.out.println(" | Melhor Fitness : "+pop.get(POP-1).getScore());

@@ -13,13 +13,12 @@ public class Individual implements Comparable<Object>{
 	
 	//PROPERTIES
 	Circle c1;
-	Circle c2;
 	double score;
 	
 	//UTILITIES
 	Random r = new Random();
 	Color RED = new Color(255, 0, 0);
-	Color GREEN = new Color(0, 255, 0);
+	Color GREEN = new Color(255, 218, 221);
 	
 	//METHODS
 	
@@ -33,20 +32,12 @@ public class Individual implements Comparable<Object>{
 		//System.out.println("Raio 1 : "+rr);
 		
 		c1 = new Circle(x,y,rr);
-		x=(int)(r.nextFloat()*img.getWidth());
-		y=(int)(r.nextFloat()*img.getHeight());
-		rr=(int)(r.nextFloat()*img.getWidth()*1/2);
-		
-		//System.out.println("Raio 2 : "+rr);
-		c2 = new Circle(x,y,rr);
-		//System.out.print("raio no c : "+c2.getRadius());
 		fitness(img);
 
 	}
 	
-	Individual(Circle l , Circle r, Image img){ // constructor using circles as parameters
+	Individual(Circle l , Image img){ // constructor using circles as parameters
 		c1 = l;
-		c2 = r;
 		fitness(img);
 	}
 	
@@ -61,10 +52,7 @@ public class Individual implements Comparable<Object>{
 	}
 	
 	Circle getCircle(int n){
-		if(n == 1)
 			return c1;
-		else
-			return c2;
 	}
 	//------------------------
 	
@@ -83,18 +71,11 @@ public class Individual implements Comparable<Object>{
 				int hwR = -10;
 				int wwR =  275;
 				int wtR = bwR+swR+hwR+wwR;
-				
-				int interw;		
+					
 				int[] vol = new int[4];
 				
 				vol = getPixelVol(img);
 				
-				int inter = interceptVol(img);
-				
-				if(inter > 50) 
-					interw = -50;
-				else
-					interw = 10;
 
 				int b = vol[0]; 
 				int s = vol[1];
@@ -102,41 +83,13 @@ public class Individual implements Comparable<Object>{
 				int w = vol[3];
 							
 				
-				int totalC = (bw*b+sw*s+hw*h+ww*w+interw*inter);
+				int totalC = (bw*b+sw*s+hw*h+ww*w);
 				
-				score = (totalC)/Math.abs(wt+wtR+interw);	
+				score = (totalC)/Math.abs(wt+wtR);	
 		
 	}
 	
-	Boolean intercept(int x, int y) {
-		
-		int rad1 = c1.getRadius()*c1.getRadius();
-		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());
-		int rad2 = c2.getRadius()*c2.getRadius();
-		int cir2 = (x - c2.getX())*(x - c2.getX()) + (y - c2.getY())*(y - c2.getY());
-		
-		if(cir1 <= rad1 && cir2 <=rad2)
-			return true;
-		else
-			return false;
-		
-	}
-	
-	int interceptVol(Image img) {
 			
-		int sum = 0 ;
-		
-		for(int i = 0 ; i < img.getHeight(); i++) {  //using the "for" structures to run by the image as 
-													//"i" and "j" being the pixel coordinates.
-			for(int j = 0 ; j < img.getWidth(); j++) {
-				
-				if(intercept(j,i))					//verify if the coordinates are intercepted inside the two circles 
-					sum++;
-			}
-		}
-		return sum;
-	}
-	
 	int[] getPixelVol(Image img) {
 		
 		int[] sum= new int[4];
@@ -166,20 +119,7 @@ public class Individual implements Comparable<Object>{
 		
 		int rad1 = c1.getRadius()*c1.getRadius();									   // calculate the r^2 from the circle (limit of the circle)
 		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 
-		int rad2 = c2.getRadius()*c2.getRadius();
-		int cir2 = (x - c2.getX())*(x - c2.getX()) + (y - c2.getY())*(y - c2.getY());
 		
-		
-		if(cir1<=rad1 || cir2 <= rad2)	// if the distance of the coordinates to the the center is smaller or equal they are 
-			return true;				// inside one of the circles, if the distance are greater
-		else
-			return false;
-	}
-	
-	Boolean containsL(int x, int y) {
-		
-		int rad1 = c1.getRadius()*c1.getRadius();									   // calculate the r^2 from the circle (limit of the circle)
-		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 		
 		
 		if(cir1<=rad1)	// if the distance of the coordinates to the the center is smaller or equal they are 
 			return true;				// inside one of the circles, if the distance are greater
@@ -187,30 +127,44 @@ public class Individual implements Comparable<Object>{
 			return false;
 	}
 	
-	Boolean containsR(int x, int y) {
+	Boolean containsL(int x, int y) {
 		
-		int rad2 = c2.getRadius()*c2.getRadius();
-		int cir2 = (x - c2.getX())*(x - c2.getX()) + (y - c2.getY())*(y - c2.getY());
-		
-		
-		if(cir2 <= rad2)	// if the distance of the coordinates to the the center is smaller or equal they are 
+		int line = 5;
+		int rad1 = c1.getRadius()*c1.getRadius();									   // calculate the r^2 from the circle (limit of the circle)
+		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 		
+		int innerRad = ((c1.getRadius()-line)*(c1.getRadius()-line));
+		if(cir1<=rad1 && cir1 >=innerRad)	// if the distance of the coordinates to the the center is smaller or equal they are 
 			return true;				// inside one of the circles, if the distance are greater
 		else
 			return false;
 	}
-		
+
+	
 	void draw(Image img ) {
 		
 		int h = img.getHeight();
 		int w = img.getWidth();
-		
+		int x,y,r;
 		for(int i = 0 ; i < h-1; i++) {
 			for(int j = 0 ; j < w-1 ; j++) {
 				if(this.containsL(j,i))
-					img.setPixel(j,i,RED);
-				if(this.containsR(j,i))
 					img.setPixel(j,i,GREEN);
 			}
+		}
+		for(float i=0; i <= Math.PI*2 ; i+=0.001){
+			
+			r = (int) (this.getCircle(1).getRadius()/1.1 * (1 - Math.sin(i)));
+			x = (int) (r * (Math.cos(i)* Math.cos(i)* Math.cos(i))+this.getCircle(1).getX());
+			y = (int) ((r * Math.sin(i)+this.getCircle(1).getY())+this.getCircle(1).getRadius()/3);
+			
+			for(int j = 0 ; j < 4 ; j++) {
+				if((x+j)<640 && (y+j)<480 && (x-j)>0 && (y-j)>0 && contains(x,y)) {
+					img.setPixel(x+j, y+j, GREEN);
+					img.setPixel(x-j, y-j, GREEN);
+				}
+			}
+			
+			
 		}
 	}
 	
