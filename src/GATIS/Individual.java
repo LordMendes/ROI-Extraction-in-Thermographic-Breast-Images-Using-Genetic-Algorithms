@@ -14,6 +14,7 @@ public class Individual implements Comparable<Object>{
 	//PROPERTIES
 	Circle c1;
 	double score;
+	int[] vol = new int[4];
 	
 	//UTILITIES
 	Random r = new Random();
@@ -65,27 +66,22 @@ public class Individual implements Comparable<Object>{
 				int hw = 250;
 				int ww = -275;
 				int wt = bw+sw+hw+ww;
-				
-				int bwR =  250;
-				int swR = -20;
-				int hwR = -10;
-				int wwR =  275;
-				int wtR = bwR+swR+hwR+wwR;
 					
 				int[] vol = new int[4];
 				
 				vol = getPixelVol(img);
-				
+				this.vol = vol;
 
-				int b = vol[0]; 
-				int s = vol[1];
-				int h = vol[2];
-				int w = vol[3];
+				int b = vol[0]; //A
+				int s = vol[1]; //B
+				int h = vol[2]; //C
+				int w = vol[3]; //D
 							
 				
-				int totalC = (bw*b+sw*s+hw*h+ww*w);
+				double totalC = (bw*b+sw*s+hw*h+ww*w);
 				
-				score = (totalC)/Math.abs(wt+wtR);	
+				//score = (totalC)/Math.abs(wt);
+				score = totalC/Math.abs(wt*10000);
 		
 	}
 	
@@ -113,6 +109,14 @@ public class Individual implements Comparable<Object>{
 		}
 		
 		return sum;
+	}
+	
+	Boolean pContains(int x, int y) {
+		
+		double rc = Math.sqrt(0.0);
+		
+		return true;
+		
 	}
   
 	Boolean contains(int x, int y) {
@@ -156,6 +160,8 @@ public class Individual implements Comparable<Object>{
 			r = (int) (this.getCircle(1).getRadius()/1.1 * (1 - Math.sin(i)));
 			x = (int) (r * (Math.cos(i)* Math.cos(i)* Math.cos(i))+this.getCircle(1).getX());
 			y = (int) ((r * Math.sin(i)+this.getCircle(1).getY())+this.getCircle(1).getRadius()/3);
+			
+			
 			
 			for(int j = 0 ; j < 4 ; j++) {
 				if((x+j)<640 && (y+j)<480 && (x-j)>0 && (y-j)>0 && contains(x,y)) {

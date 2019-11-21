@@ -10,8 +10,8 @@ import image.Image;
 public class GA {
 	//CONSTANTS
 	final int decimalArraySize = 10;
-	final static int POP = 50;
-	final int GEN = 60;
+	final static int POP = 30;
+	final int GEN = 200;
 	final float mR = 0.02f;
 	final float cR = 0.7f;
 	//ATTRIBUTES
@@ -284,20 +284,47 @@ public class GA {
 	public static void main(String[]args) throws Exception {
 		GA a = new GA();
 		
+		int gat =30;
+		double media = 0;
+		double mediana =0;
+		double max=0;
+		double min=0;
+		double time=0;
+		long ini = System.currentTimeMillis();
 		
-		
-		
-		for(int i = 0 ; i < 10 ; i++) {
-			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img2.jpg");
-			//a.lessQual(img);
+		for(int i = 0 ; i < gat ; i++) {
+			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img1.jpg");
 			img.convertToRGB();
-			a.run(img);
-			pop.get(POP-1).draw(img);
-			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/saudavel"+i+".jpg", "jpg");
 			
-			System.out.print("Ga : "+i);
-			System.out.println(" | Melhor Fitness : "+pop.get(POP-1).getScore());
+			long tempoInicio = System.currentTimeMillis();
+			a.run(img);
+			long tempoFinal = System.currentTimeMillis();
+			
+			pop.get(POP-1).draw(img);
+			//img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
+
+			
+			for(int j = 0 ; j < pop.size() ; j++) {
+				media+=pop.get(j).getScore();
+			}					
+			mediana+=(pop.get(pop.size()/2).getScore());
+			min+=pop.get(0).getScore();
+			max+=pop.get(POP-1).getScore();
+			time+=(double)(tempoFinal-tempoInicio);
+			
+//			System.out.println("Ga : "+i);
+//			System.out.println("Tempo : "+time[i]/1000 + "s");
+//			System.out.println(" Media : "+media[i]+" Mediana : "+mediana[i]+" Min : "+min[i]+" Max : "+max[i]+"\n");
+			
+			System.out.print(i+" ");
 		}
+		long fim = System.currentTimeMillis();
+		System.out.println("\nTempo : "+time/(1000*gat) + "s");
+		System.out.println(" Media : "+media/(pop.size()*gat)+" Mediana : "+mediana/gat+" Min : "+min/gat+" Max : "+max/gat+"\n");
+		
+		System.out.println("t: "+(fim-ini));
+		
+		
 	
 	}
 	
