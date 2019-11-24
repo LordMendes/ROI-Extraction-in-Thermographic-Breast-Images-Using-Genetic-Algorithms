@@ -10,8 +10,8 @@ import image.Image;
 public class GA {
 	//CONSTANTS
 	final int decimalArraySize = 10;
-	final static int POP = 30;
-	final int GEN = 200;
+	final static int POP = 1000;
+	final int GEN = 1000;
 	final float mR = 0.02f;
 	final float cR = 0.7f;
 	//ATTRIBUTES
@@ -284,7 +284,8 @@ public class GA {
 	public static void main(String[]args) throws Exception {
 		GA a = new GA();
 		
-		int gat =30;
+		int gat = 1;
+		
 		double media = 0;
 		double mediana =0;
 		double max=0;
@@ -301,7 +302,7 @@ public class GA {
 			long tempoFinal = System.currentTimeMillis();
 			
 			pop.get(POP-1).draw(img);
-			//img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
+			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
 
 			
 			for(int j = 0 ; j < pop.size() ; j++) {
