@@ -33,14 +33,7 @@ public class Individual implements Comparable<Object>{
 		//System.out.println("Raio 1 : "+rr);
 		
 		c1 = new Circle(x,y,rr);
-<<<<<<< HEAD
-		x=(int)(r.nextFloat()*img.getWidth());
-		y=(int)(r.nextFloat()*img.getHeight());
-		rr=(int)(r.nextFloat()*img.getWidth()*1/2);
 		
-		c2 = new Circle(x,y,rr);
-=======
->>>>>>> cardioide
 		fitness(img);
 
 	}
@@ -74,12 +67,8 @@ public class Individual implements Comparable<Object>{
 				int hw = 250;
 				int ww = -275;
 				int wt = bw+sw+hw+ww;
-<<<<<<< HEAD
 				
 				int interw;		
-=======
-					
->>>>>>> cardioide
 				int[] vol = new int[4];
 				
 				vol = getPixelVol(img);
@@ -93,12 +82,8 @@ public class Individual implements Comparable<Object>{
 				
 				double totalC = (bw*b+sw*s+hw*h+ww*w);
 				
-<<<<<<< HEAD
-				score = (totalC)/Math.abs(wt+interw);	
-=======
 				//score = (totalC)/Math.abs(wt);
 				score = totalC/Math.abs(wt*10000);
->>>>>>> cardioide
 		
 	}
 	

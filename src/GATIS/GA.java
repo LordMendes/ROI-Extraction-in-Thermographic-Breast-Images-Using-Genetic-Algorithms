@@ -9,16 +9,13 @@ import image.Image;
 
 public class GA {
 	//CONSTANTS
-	final int decimalArraySize = 10;
-<<<<<<< HEAD
-	final static int POP = 50;
-	final int GEN = 60;
-=======
-	final static int POP = 1000;
-	final int GEN = 1000;
->>>>>>> cardioide
-	final float mR = 0.02f;
-	final float cR = 0.7f;
+	final static int gat = 10; 			 //QUANTIDADE DE GA'S PARA SEREM RODADOS
+	final int decimalArraySize = 10; //TAMANHO DO INDIVIDUO
+	final static int POP = 60; 		 //TAMANHO DA POPULAÇÃO	
+	final int GEN = 50;				 //TAMANHO DA GERAÇÃO
+	final float mR = 0.02f;			 //CHANCE DE OCORRER MUTAÇÃO
+	final float cR = 0.7f;			 //CHANCE DE OCORRER CRUZAMENTO
+	
 	//ATTRIBUTES
 	Random r = new Random();
 	
@@ -289,7 +286,7 @@ public class GA {
 	public static void main(String[]args) throws Exception {
 		GA a = new GA();
 		
-		int gat = 1;
+		
 		
 		double media = 0;
 		double mediana =0;
@@ -316,19 +313,14 @@ public class GA {
 			mediana+=(pop.get(pop.size()/2).getScore());
 			min+=pop.get(0).getScore();
 			max+=pop.get(POP-1).getScore();
-			time+=(double)(tempoFinal-tempoInicio);
-			
-//			System.out.println("Ga : "+i);
-//			System.out.println("Tempo : "+time[i]/1000 + "s");
-//			System.out.println(" Media : "+media[i]+" Mediana : "+mediana[i]+" Min : "+min[i]+" Max : "+max[i]+"\n");
-			
-			System.out.print(i+" ");
+			time+=(double)(tempoFinal-tempoInicio);						
+			System.out.println("Ga "+i+" realizado");
 		}
 		long fim = System.currentTimeMillis();
-		System.out.println("\nTempo : "+time/(1000*gat) + "s");
-		System.out.println(" Media : "+media/(pop.size()*gat)+" Mediana : "+mediana/gat+" Min : "+min/gat+" Max : "+max/gat+"\n");
+		System.out.println("\nTempo médio : "+time/(1000*gat) + "s");
+		System.out.println("Media : "+media/(pop.size()*gat)+" Mediana : "+mediana/gat+" Min : "+min/gat+" Max : "+max/gat+"\n");
 		
-		System.out.println("t: "+(fim-ini));
+		System.out.println("Tempo Total: "+(fim-ini) + "s");
 		
 		
 	
