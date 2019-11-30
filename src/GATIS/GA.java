@@ -9,7 +9,7 @@ import image.Image;
 
 public class GA {
 	//CONSTANTS
-	final static int gat = 10; 			 //QUANTIDADE DE GA'S PARA SEREM RODADOS
+	final static int gat = 3; 		 //QUANTIDADE DE GA'S PARA SEREM RODADOS
 	final int decimalArraySize = 10; //TAMANHO DO INDIVIDUO
 	final static int POP = 60; 		 //TAMANHO DA POPULAÇÃO	
 	final int GEN = 50;				 //TAMANHO DA GERAÇÃO
@@ -18,6 +18,7 @@ public class GA {
 	
 	//ATTRIBUTES
 	Random r = new Random();
+	static String imagem = "img5";   //NOME DA IMAGEM QUE O GA RODARÁ
 	
 	static ArrayList<Individual> pop = new ArrayList<Individual>();
 	
@@ -296,7 +297,7 @@ public class GA {
 		long ini = System.currentTimeMillis();
 		
 		for(int i = 0 ; i < gat ; i++) {
-			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img1.jpg");
+			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/"+imagem+".jpg");
 			img.convertToRGB();
 			
 			long tempoInicio = System.currentTimeMillis();
@@ -304,7 +305,7 @@ public class GA {
 			long tempoFinal = System.currentTimeMillis();
 			
 			pop.get(POP-1).draw(img);
-			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd"+i+".jpg", "jpg");
+			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/resultado"+i+".jpg", "jpg");
 
 			
 			for(int j = 0 ; j < pop.size() ; j++) {
