@@ -9,7 +9,7 @@ import image.Image;
 
 public class GA {
 	//CONSTANTS
-	final static int gat = 3; 		 //QUANTIDADE DE GA'S PARA SEREM RODADOS
+	final static int gat = 1; 		 //QUANTIDADE DE GA'S PARA SEREM RODADOS
 	final int decimalArraySize = 10; //TAMANHO DO INDIVIDUO
 	final static int POP = 60; 		 //TAMANHO DA POPULAÇÃO	
 	final int GEN = 50;				 //TAMANHO DA GERAÇÃO
@@ -18,10 +18,21 @@ public class GA {
 	
 	//ATTRIBUTES
 	Random r = new Random();
-	static String imagem = "img5";   //NOME DA IMAGEM QUE O GA RODARÁ
+	static String imagem = "img2";   //NOME DA IMAGEM QUE O GA RODARÁ
 	
 	static ArrayList<Individual> pop = new ArrayList<Individual>();
 	
+	Individual getIndividual(int pos) {
+		return pop.get(pos);
+	}
+	
+	void getTop5(ArrayList<Individual> tops) {
+		tops.add(pop.get(POP-1));
+		tops.add(pop.get(POP-2));
+		tops.add(pop.get(POP-3));
+		tops.add(pop.get(POP-4));
+		tops.add(pop.get(POP-5));
+	}
 	
 	void initPop(Image img) {
 		pop.clear();
@@ -30,6 +41,14 @@ public class GA {
 			pop.add(a);
 		}
 		Collections.sort(pop);
+	}
+	
+	void initPop(ArrayList<Individual> clan) {
+		
+		for(int i = 0 ; i < POP ; i++) {
+			pop.add(clan.get(i));
+		}
+		
 	}
 	
 	void printAll() {
@@ -220,7 +239,7 @@ public class GA {
 	
 	void run(Image img) {
 		
-		initPop(img);
+		//initPop(img);
 		int n = 0;
 		Individual elite;
 		
@@ -301,6 +320,7 @@ public class GA {
 			img.convertToRGB();
 			
 			long tempoInicio = System.currentTimeMillis();
+			a.initPop(img);
 			a.run(img);
 			long tempoFinal = System.currentTimeMillis();
 			
