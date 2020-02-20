@@ -65,8 +65,8 @@ public class GA {
 
 	Individual[] crossover(Individual a1, Individual a2 ,Image img) {
 
-		Circle l1 = new Circle(a1.getCircle(1));
-		Circle l2 = new Circle(a2.getCircle(1));
+		Cardioid l1 = new Cardioid(a1.getCardioid(1));
+		Cardioid l2 = new Cardioid(a2.getCardioid(1));
 		
 		
 		int[]auxXl = new int[decimalArraySize];
@@ -108,8 +108,8 @@ public class GA {
 		
 		
 			
-		Circle cl = new Circle(auxXl, auxYl, auxRl);
-		Circle cl2 = new Circle(auxXl2, auxYl2, auxRl2);
+		Cardioid cl = new Cardioid(auxXl, auxYl, auxRl);
+		Cardioid cl2 = new Cardioid(auxXl2, auxYl2, auxRl2);
 		
 		Individual child = new Individual(cl,img);
 		Individual child2 = new Individual(cl2,img);
@@ -134,7 +134,7 @@ public class GA {
 		
 		if(rateX > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCircle(1).getBx();
+			aux = a.getCardioid(1).getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
@@ -142,7 +142,7 @@ public class GA {
 			}
 		}if(rateY > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCircle(1).getBx();
+			aux = a.getCardioid(1).getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
@@ -150,7 +150,7 @@ public class GA {
 			}
 		}if(rateR > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCircle(1).getBx();
+			aux = a.getCardioid(1).getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
@@ -164,7 +164,7 @@ public class GA {
 		
 		if(rateX > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCircle(2).getBx();
+			aux = a.getCardioid(2).getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
@@ -172,7 +172,7 @@ public class GA {
 			}
 		}if(rateY > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCircle(2).getBx();
+			aux = a.getCardioid(2).getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
@@ -180,7 +180,7 @@ public class GA {
 			}
 		}if(rateR > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCircle(2).getBx();
+			aux = a.getCardioid(2).getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
@@ -325,7 +325,7 @@ public class GA {
 			long tempoFinal = System.currentTimeMillis();
 			
 			pop.get(POP-1).draw(img);
-			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/resultado"+i+".jpg", "jpg");
+			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/teste"+i+".jpg", "jpg");
 
 			
 			for(int j = 0 ; j < pop.size() ; j++) {

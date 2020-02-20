@@ -12,7 +12,7 @@ public class Individual implements Comparable<Object>{
 	final float[] interval = {0,45,140,200,256};
 	
 	//PROPERTIES
-	Circle c1;
+	Cardioid c1;
 	double score;
 	int[] vol = new int[4];
 	
@@ -32,13 +32,13 @@ public class Individual implements Comparable<Object>{
 		rr=(int)(r.nextFloat()*img.getWidth()*1/2);
 		//System.out.println("Raio 1 : "+rr);
 		
-		c1 = new Circle(x,y,rr);
+		c1 = new Cardioid(x,y,rr);
 		
 		fitness(img);
 
 	}
 	
-	Individual(Circle l , Image img){ // constructor using circles as parameters
+	Individual(Cardioid l , Image img){ // constructor using Cardioids as parameters
 		c1 = l;
 		fitness(img);
 	}
@@ -53,7 +53,7 @@ public class Individual implements Comparable<Object>{
 		return score;
 	}
 	
-	Circle getCircle(int n){
+	Cardioid getCardioid(int n){
 			return c1;
 	}
 	//------------------------
@@ -92,10 +92,10 @@ public class Individual implements Comparable<Object>{
 		
 		int[] sum= new int[4];
 		double pix;
-		for(int i = 0; i < img.getHeight()-1; i++) {        //using the "for" structures to run by the image as 
+		for(int i = 1; i < img.getHeight(); i++) {        //using the "for" structures to run by the image as 
 															//"i" and "j" being the pixel coordinates.
-			for(int j = 0 ; j < img.getWidth()-1; j++) {
-				if(contains(j,i)) {									//verify if the coordinates are inside one of the circles 
+			for(int j = 1 ; j < img.getWidth(); j++) {
+				if(contains(j,i)) {									//verify if the coordinates are inside one of the Cardioids 
 					pix = img.getPixel(j, i);
 					if(pix >= interval[0] && pix < interval[1]) {
 						sum[0]++;
@@ -120,15 +120,32 @@ public class Individual implements Comparable<Object>{
 		return true;
 		
 	}
-  
+  /*
 	Boolean contains(int x, int y) {
 		
-		int rad1 = c1.getRadius()*c1.getRadius();									   // calculate the r^2 from the circle (limit of the circle)
+		int rad1 = c1.getSize()*c1.getSize();									   // calculate the r^2 from the Cardioid (limit of the Cardioid)
 		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 
 		
 		
 		if(cir1<=rad1)	// if the distance of the coordinates to the the center is smaller or equal they are 
-			return true;				// inside one of the circles, if the distance are greater
+			return true;				// inside one of the Cardioids, if the distance are greater
+		else
+			return false;
+	}
+	*/
+	Boolean contains(int x, int y) {
+		double t;
+		
+		if((c1.getX()-x)==0)
+			t = 0;
+		else		
+			t = Math.atan((c1.getY()-y)/(c1.getX()-x));
+		
+		double rC = c1.getSize() + Math.sin(t);
+		double rad = MyMath.EuclideanDist(c1.getX(), x, c1.getY(), y);
+		
+		if(rad <= rC) 			
+			return true;				
 		else
 			return false;
 	}
@@ -136,16 +153,16 @@ public class Individual implements Comparable<Object>{
 	Boolean containsL(int x, int y) {
 		
 		int line = 5;
-		int rad1 = c1.getRadius()*c1.getRadius();									   // calculate the r^2 from the circle (limit of the circle)
+		int rad1 = c1.getSize()*c1.getSize();									   // calculate the r^2 from the Cardioid (limit of the Cardioid)
 		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 		
-		int innerRad = ((c1.getRadius()-line)*(c1.getRadius()-line));
+		int innerRad = ((c1.getSize()-line)*(c1.getSize()-line));
 		if(cir1<=rad1 && cir1 >=innerRad)	// if the distance of the coordinates to the the center is smaller or equal they are 
-			return true;				// inside one of the circles, if the distance are greater
+			return true;				// inside one of the Cardioids, if the distance are greater
 		else
 			return false;
 	}
 
-	
+//ADAPTAR O DRAW A CARDIODE
 	void draw(Image img ) {
 		
 		int h = img.getHeight();
@@ -159,9 +176,9 @@ public class Individual implements Comparable<Object>{
 		}
 		for(float i=0; i <= Math.PI*2 ; i+=0.001){
 			
-			r = (int) (this.getCircle(1).getRadius()/1.1 * (1 - Math.sin(i)));
-			x = (int) (r * (Math.cos(i)* Math.cos(i)* Math.cos(i))+this.getCircle(1).getX());
-			y = (int) ((r * Math.sin(i)+this.getCircle(1).getY())+this.getCircle(1).getRadius()/3);
+			r = (int) (this.getCardioid(1).getSize()/1.1 * (1 - Math.sin(i)));
+			x = (int) (r * (Math.cos(i)* Math.cos(i)* Math.cos(i))+this.getCardioid(1).getX());
+			y = (int) ((r * Math.sin(i)+this.getCardioid(1).getY())+this.getCardioid(1).getSize()/3);
 			
 			
 			

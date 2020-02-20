@@ -100,6 +100,11 @@ public class MyMath {								//Class of math's operations that we will use
 		return binaryToDecimal(GraytoBinary(n));
 	}
 	
+	static float EuclideanDist(int x1,int x2, int y1, int y2) {
+		
+		return (float) Math.sqrt((x1-x2)^2 + (y1-y2)^2);
+	}
+	
 	public static void main(String[] args){ 
         int[] s = {1,1,1,1,0,0,0,0,1,0};
         
