@@ -98,9 +98,9 @@ public class Cardioid {
 
 		public static void main(String[]args) {
 			Cardioid a = new Cardioid(100,100,100);
-			int[]c = a.getBx();
-			for(int i = 0 ; i <10;i++) {
-				System.out.print(c[i]);
+			int[]c = a.getBr();
+			for(int i : c) {
+				System.out.print(i);
 			}
 		}		
 

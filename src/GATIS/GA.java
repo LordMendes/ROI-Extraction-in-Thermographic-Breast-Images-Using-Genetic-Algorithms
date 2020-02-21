@@ -18,7 +18,7 @@ public class GA {
 	
 	//ATTRIBUTES
 	Random r = new Random();
-	static String imagem = "img2";   //NOME DA IMAGEM QUE O GA RODARÁ
+	static String imagem = "img6";   //NOME DA IMAGEM QUE O GA RODARÁ
 	
 	static ArrayList<Individual> pop = new ArrayList<Individual>();
 	
@@ -65,8 +65,8 @@ public class GA {
 
 	Individual[] crossover(Individual a1, Individual a2 ,Image img) {
 
-		Cardioid l1 = new Cardioid(a1.getCardioid(1));
-		Cardioid l2 = new Cardioid(a2.getCardioid(1));
+		Cardioid l1 = new Cardioid(a1.getCardioid());
+		Cardioid l2 = new Cardioid(a2.getCardioid());
 		
 		
 		int[]auxXl = new int[decimalArraySize];
@@ -134,58 +134,31 @@ public class GA {
 		
 		if(rateX > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCardioid(1).getBx();
+			aux = a.getCardioid().getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
 				aux[point]=0;
 			}
+			a.setX(aux);
 		}if(rateY > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCardioid(1).getBx();
+			aux = a.getCardioid().getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
 				aux[point]=0;
 			}
+			a.setY(aux);
 		}if(rateR > 0.5) {
 			point = r.nextInt(decimalArraySize);
-			aux = a.getCardioid(1).getBx();
+			aux = a.getCardioid().getBx();
 			if(aux[point] == 0) {
 				aux[point]=1;
 			}else {
 				aux[point]=0;
 			}
-		}
-		
-		rateX = r.nextFloat();
-		rateY = r.nextFloat();
-		rateR = r.nextFloat();
-		
-		if(rateX > 0.5) {
-			point = r.nextInt(decimalArraySize);
-			aux = a.getCardioid(2).getBx();
-			if(aux[point] == 0) {
-				aux[point]=1;
-			}else {
-				aux[point]=0;
-			}
-		}if(rateY > 0.5) {
-			point = r.nextInt(decimalArraySize);
-			aux = a.getCardioid(2).getBx();
-			if(aux[point] == 0) {
-				aux[point]=1;
-			}else {
-				aux[point]=0;
-			}
-		}if(rateR > 0.5) {
-			point = r.nextInt(decimalArraySize);
-			aux = a.getCardioid(2).getBx();
-			if(aux[point] == 0) {
-				aux[point]=1;
-			}else {
-				aux[point]=0;
-			}
+			a.setS(aux);
 		}
 		
 		return a;
@@ -308,40 +281,24 @@ public class GA {
 		
 		
 		
-		double media = 0;
-		double mediana =0;
-		double max=0;
-		double min=0;
-		double time=0;
-		long ini = System.currentTimeMillis();
-		
 		for(int i = 0 ; i < gat ; i++) {
 			Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/"+imagem+".jpg");
 			img.convertToRGB();
 			
-			long tempoInicio = System.currentTimeMillis();
+			long start = System.currentTimeMillis();
 			a.initPop(img);
 			a.run(img);
-			long tempoFinal = System.currentTimeMillis();
+			long end = System.currentTimeMillis();
 			
 			pop.get(POP-1).draw(img);
+			System.out.println(pop.get(POP-1).getCardioid().getSize());
 			img.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/teste"+i+".jpg", "jpg");
 
-			
-			for(int j = 0 ; j < pop.size() ; j++) {
-				media+=pop.get(j).getScore();
-			}					
-			mediana+=(pop.get(pop.size()/2).getScore());
-			min+=pop.get(0).getScore();
-			max+=pop.get(POP-1).getScore();
-			time+=(double)(tempoFinal-tempoInicio);						
-			System.out.println("Ga "+i+" realizado");
+				
+					
+			System.out.println("Ga "+i+" realizado em "+ (end-start)/1000+" segundos");
 		}
-		long fim = System.currentTimeMillis();
-		System.out.println("\nTempo médio : "+time/(1000*gat) + "s");
-		System.out.println("Media : "+media/(pop.size()*gat)+" Mediana : "+mediana/gat+" Min : "+min/gat+" Max : "+max/gat+"\n");
-		
-		System.out.println("Tempo Total: "+(fim-ini) + "s");
+
 		
 		
 	

@@ -19,7 +19,7 @@ public class Individual implements Comparable<Object>{
 	//UTILITIES
 	Random r = new Random();
 	Color RED = new Color(255, 0, 0);
-	Color GREEN = new Color(255, 218, 221);
+	Color GREEN = new Color(0, 255, 0);
 	
 	//METHODS
 	
@@ -53,7 +53,7 @@ public class Individual implements Comparable<Object>{
 		return score;
 	}
 	
-	Cardioid getCardioid(int n){
+	Cardioid getCardioid(){
 			return c1;
 	}
 	//------------------------
@@ -67,8 +67,7 @@ public class Individual implements Comparable<Object>{
 				int hw = 250;
 				int ww = -275;
 				int wt = bw+sw+hw+ww;
-				
-				int interw;		
+					
 				int[] vol = new int[4];
 				
 				vol = getPixelVol(img);
@@ -113,51 +112,44 @@ public class Individual implements Comparable<Object>{
 		return sum;
 	}
 	
-	Boolean pContains(int x, int y) {
-		
-		double rc = Math.sqrt(0.0);
-		
-		return true;
-		
-	}
-  /*
-	Boolean contains(int x, int y) {
-		
-		int rad1 = c1.getSize()*c1.getSize();									   // calculate the r^2 from the Cardioid (limit of the Cardioid)
-		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 
-		
-		
-		if(cir1<=rad1)	// if the distance of the coordinates to the the center is smaller or equal they are 
-			return true;				// inside one of the Cardioids, if the distance are greater
-		else
-			return false;
-	}
-	*/
+ 
+	// ESSE CONTAINS É PRO PIXELVOL
 	Boolean contains(int x, int y) {
 		double t;
-		
-		if((c1.getX()-x)==0)
+		if((x - c1.getX()) == 0)
 			t = 0;
 		else		
-			t = Math.atan((c1.getY()-y)/(c1.getX()-x));
+			t = Math.atan2((c1.getY() - y) , (x - c1.getX()));
 		
-		double rC = c1.getSize() + Math.sin(t);
-		double rad = MyMath.EuclideanDist(c1.getX(), x, c1.getY(), y);
+		double rC =  c1.getSize() * (1 + Math.sin(t));
+		
+		double rad = MyMath.EuclideanDist(x, c1.getX(), c1.getY(), y);
+		
 		
 		if(rad <= rC) 			
 			return true;				
 		else
 			return false;
 	}
-	
+	//ESSE CONTAINS É PRO DESENHO
+		
 	Boolean containsL(int x, int y) {
 		
+		double t;
 		int line = 5;
-		int rad1 = c1.getSize()*c1.getSize();									   // calculate the r^2 from the Cardioid (limit of the Cardioid)
-		int cir1 = (x - c1.getX())*(x - c1.getX()) + (y - c1.getY())*(y - c1.getY());  // calculate of the center to the coordinates 		
-		int innerRad = ((c1.getSize()-line)*(c1.getSize()-line));
-		if(cir1<=rad1 && cir1 >=innerRad)	// if the distance of the coordinates to the the center is smaller or equal they are 
-			return true;				// inside one of the Cardioids, if the distance are greater
+		
+		if((x - c1.getX()) == 0)
+			t = 0;
+		else		
+			t = Math.atan2((c1.getY() - y) , (x - c1.getX()));
+		
+		double rC =  c1.getSize() * (1 + Math.sin(t));
+		
+		double rad = MyMath.EuclideanDist(x, c1.getX(), c1.getY(), y);
+		
+		
+		if(rad <= rC && rad>= rC-line)	
+			return true;				
 		else
 			return false;
 	}
@@ -173,12 +165,12 @@ public class Individual implements Comparable<Object>{
 				if(this.containsL(j,i))
 					img.setPixel(j,i,GREEN);
 			}
-		}
+		}/*
 		for(float i=0; i <= Math.PI*2 ; i+=0.001){
 			
-			r = (int) (this.getCardioid(1).getSize()/1.1 * (1 - Math.sin(i)));
-			x = (int) (r * (Math.cos(i)* Math.cos(i)* Math.cos(i))+this.getCardioid(1).getX());
-			y = (int) ((r * Math.sin(i)+this.getCardioid(1).getY())+this.getCardioid(1).getSize()/3);
+			r = (int) (this.getCardioid().getSize() * (1 - Math.sin(i)));
+			x = (int) (r * (Math.cos(i)* Math.cos(i)* Math.cos(i)) + this.getCardioid().getX());
+			y = (int) (r * Math.sin(i) + this.getCardioid().getY()) ;
 			
 			
 			
@@ -188,21 +180,30 @@ public class Individual implements Comparable<Object>{
 					img.setPixel(x-j, y-j, GREEN);
 				}
 			}
-			
-			
-		}
+		}*/
 	}
 	
+	void setX(int[]a) {
+		this.getCardioid().setX(a);
+	}
+	
+	void setY(int[]a) {
+		this.getCardioid().setY(a);
+	}
+	
+	void setS(int[]a) {
+		this.getCardioid().setS(a);;
+	}
 	public static void main(String[]args) throws Exception{
 		
 		Image img = new Image("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/img2.jpg");
 		Image test = new Image(img);
-
-		Individual a = new Individual(img);
-		a.draw(test);
-		a.fitness(img);
+		img.convertToRGB();
 		
-		//a.lessQual(test);
+		Individual a = new Individual(img);
+		a.getCardioid().setPosition(200, 300);
+		a.getCardioid().setSize(1);
+		a.draw(test);
 		
 		test.exportImage("C:/Users/Lucas C Mendes/Documents/JAVA/GATIS/src/GATIS/asd.jpg", "jpg");
 		

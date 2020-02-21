@@ -102,17 +102,36 @@ public class MyMath {								//Class of math's operations that we will use
 	
 	static float EuclideanDist(int x1,int x2, int y1, int y2) {
 		
-		return (float) Math.sqrt((x1-x2)^2 + (y1-y2)^2);
+		return (float) Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2));
+	}
+	
+	static double atan(int y, int x) {
+		double v = Double.NaN;
+		if(x>0)
+			v = Math.atan(y/x);
+		else if(y>=0 && x<0)
+			v = (Math.PI+Math.atan(y/x));
+		else if(y<0 && x<0)
+			v = (-Math.PI+Math.atan(y/x));
+		else if(y>0 && x ==0)
+			v = Math.PI/2;
+		else if(y<0 && x==0)
+			v = -Math.PI/2;
+		if(v < 0)
+			v = v + 2*Math.PI;
+		
+		return v;
+		
 	}
 	
 	public static void main(String[] args){ 
-        int[] s = {1,1,1,1,0,0,0,0,1,0};
+        int[] s = {0,0,0,1,0,1,0,1,1,0};
         
         for(int n : s) 
         System.out.print(n);
         
         System.out.println();
-        
+        System.out.println(GraytoDec(s));
         for(int n : BinarytoGray(s)) 
             System.out.print(n);
     }
