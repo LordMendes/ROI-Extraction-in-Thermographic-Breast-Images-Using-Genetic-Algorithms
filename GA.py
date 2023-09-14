@@ -7,12 +7,12 @@ from math import ceil, floor
 
 class GA:
     # CONSTANTS
-    decimalArraySize = 10  # TAMANHO DO INDIVIDUO
-    POPULATION_SIZE = 60               # TAMANHO DA POPULA��O
-    GENERATIONS = 50                # TAMANHO DA GERA��O
-    ELITE_PERCENTAGE = 0.1         # TAMANHO DA ELITE
-    mR = 0.02              # CHANCE DE OCORRER MUTA��O
-    cR = 0.7               # CHANCE DE OCORRER CRUZAMENTO
+    decimalArraySize = 10
+    POPULATION_SIZE = 30
+    GENERATIONS = 30
+    ELITE_PERCENTAGE = 0.1
+    mR = 0.02
+    cR = 0.7
 
     imagem = "img6"  # NOME DA IMAGEM QUE O GA RODAR�
 
@@ -103,8 +103,12 @@ class GA:
 
     def print_best(self):
         print(self.population[0].get_score())
+    
     def get_best_score(self):
         return self.population[0].get_score()
+    
+    def print_best_info(self):
+        return self.population[0].print_info()
 
     def print_all(self):
         for i in self.population:
@@ -145,12 +149,13 @@ def run(img):
         ga.fitness_all()
         ga.population.sort(key=ga.sort_population, reverse=True)
 
-        print("==========================================")
+        print("=========== GENERATION ",i+1," ===========")
         print("Generation ", i+1)
         print("Population size : ", len(ga.population))
-        print("best : ", ga.get_best_score())
+        print("================== BEST ==================")
+        ga.print_best_info()
         print("==========================================")
-        ga.population[0].save_to_file('gen_{i}'.format(i=i+1))
+        ga.population[0].save_to_file('test/2/gen_{i}'.format(i=i+1))
     return ga.population[0]
 
 

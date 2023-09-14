@@ -4,6 +4,7 @@ import random as r
 
 binarySize = 10
 color_interval = [0, 45, 140, 200, 256]
+color_weights = [-250, 50, 250, -275]
 
 
 class Individual:
@@ -34,14 +35,13 @@ class Individual:
         self.cardioid.mutate()
 
     def fitness(self):
-        color_weights = [-250, 50, 250, -275]
 
         # The total weight.
         total_weight = sum(color_weights)
 
         # Get the pixel volume of the image.
         pixel_volume = self.get_pixel_volume()
-        
+
         if (pixel_volume[0]+pixel_volume[1]+pixel_volume[2]+pixel_volume[3]) == 0:
             return 0
 
@@ -62,7 +62,7 @@ class Individual:
         # Get the pixel volume of the image.
         for i in range(self.img.shape[0]):
             for j in range(self.img.shape[1]):
-                is_inside_cardioid= self.is_inside_cardioid(j, i)
+                is_inside_cardioid = self.is_inside_cardioid(j, i)
                 if(is_inside_cardioid):
                     pixel_color = self.img[i, j][0]
                     if pixel_color < color_interval[1]:
@@ -97,6 +97,12 @@ class Individual:
         return self.cardioid.is_inside_cardioid(x, y)
 
     def print_binary(self):
-        print("X: ",self.cardioid.x_cordinate.gray_code,
-              "Y: ",self.cardioid.y_cordinate.gray_code,
-              "R: ",self.cardioid.size.gray_code)
+        print("X: ", self.cardioid.x_cordinate.gray_code,
+              "Y: ", self.cardioid.y_cordinate.gray_code,
+              "R: ", self.cardioid.size.gray_code)
+
+    def print_info(self):
+        print("Score: ", self.score, "\n",
+              "X: ", self.cardioid.x_cordinate.decimal, "\n",
+              "Y: ", self.cardioid.y_cordinate.decimal, "\n",
+              "R: ", self.cardioid.size.decimal)

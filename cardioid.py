@@ -7,8 +7,8 @@ ARRAY_SIZE = 10
 
 class Cordinate:
     def __init__(self, n) -> None:
-        self.int = int(n)
-        self.binary = self.int_to_binary(int(self.int))
+        self.decimal = int(n)
+        self.binary = self.int_to_binary(int(self.decimal))
         self.gray_code = self.binary_to_gray(self.binary)
 
     def flip_bit(self, binary, index):
@@ -25,7 +25,7 @@ class Cordinate:
         mutated_gray_code = self.flip_bit(str(self.gray_code), mutation_index)
         self.gray_code = mutated_gray_code
         self.binary = self.gray_to_binary(self.gray_code)
-        self.int = int(self.binary, 2)
+        self.decimal = int(self.binary, 2)
 
     def gray_to_binary(self, n):
         n = int(n, 2)
@@ -63,9 +63,9 @@ class Cardioid:
         self.size = Cordinate(size)
 
     def is_inside_cardioid(self, x, y):
-        size = self.size.int
-        x_c = self.x_cordinate.int
-        y_c = self.y_cordinate.int
+        size = self.size.decimal
+        x_c = self.x_cordinate.decimal
+        y_c = self.y_cordinate.decimal
         r = size / 2
         # distance = math.sqrt((x - x_c) ** 2 + (y - y_c) ** 2)
         theta = atan2(y - y_c, x - x_c)
