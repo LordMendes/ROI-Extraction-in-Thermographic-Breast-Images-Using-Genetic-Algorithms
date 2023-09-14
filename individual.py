@@ -5,7 +5,7 @@ import random as r
 
 binarySize = 10
 color_interval = [0, 45, 140, 200, 256]
-color_weights = [-35, 5, 25, -27.5]
+color_weights = [-25, 5, 25, -27.5]
 
 
 class Individual:

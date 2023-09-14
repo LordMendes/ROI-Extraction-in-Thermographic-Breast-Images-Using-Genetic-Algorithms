@@ -12,10 +12,10 @@ TRIAL = 4
 class GA:
     # CONSTANTS
     decimalArraySize = 10
-    POPULATION_SIZE = 50
-    GENERATIONS = 30
+    POPULATION_SIZE = 60
+    GENERATIONS = 50
     ELITE_PERCENTAGE = 0.1
-    mR = 0.05
+    mR = 0.02
 
     imagem = "img6"  # NOME DA IMAGEM QUE O GA RODAR�
 
