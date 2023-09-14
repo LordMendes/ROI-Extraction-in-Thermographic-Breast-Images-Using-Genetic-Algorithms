@@ -1,10 +1,11 @@
+import os
 import cv2
 import cardioid as c
 import random as r
 
 binarySize = 10
 color_interval = [0, 45, 140, 200, 256]
-color_weights = [-250, 50, 250, -275]
+color_weights = [-250, 50, 250, -375]
 
 
 class Individual:
@@ -41,6 +42,12 @@ class Individual:
 
         # Get the pixel volume of the image.
         pixel_volume = self.get_pixel_volume()
+
+        # Check if cordinates are inside the image
+        if self.cardioid.x_cordinate.decimal < 0 or self.cardioid.x_cordinate.decimal > self.img.shape[1]:
+            return 0
+        if self.cardioid.y_cordinate.decimal < 0 or self.cardioid.y_cordinate.decimal > self.img.shape[0]:
+            return 0
 
         if (pixel_volume[0]+pixel_volume[1]+pixel_volume[2]+pixel_volume[3]) == 0:
             return 0
@@ -84,10 +91,16 @@ class Individual:
                     self.img[i, j] = (255, 0, 0)
         return self.img
 
-    def save_to_file(self, file_name):
+    def save_to_file(self, folder_name, file_name):
         clone = Individual(self.img.copy(), self.cardioid)
         clone.draw()
-        cv2.imwrite('./{file_name}.png'.format(file_name=file_name), clone.img)
+
+        # Check if the folder exists, and create it if it doesn't
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        # Save the image inside the folder
+        cv2.imwrite(os.path.join(folder_name, f'{file_name}.png'), clone.img)
 
     def slice(self, point):
         # Slice the cardioid.

@@ -1,0 +1,8 @@
+# CONSTANTS
+decimalArraySize = 10
+POPULATION_SIZE = 30
+GENERATIONS = 30
+ELITE_PERCENTAGE = 0.1
+mR = 0.05
+cR = 0.7
+color_weights = [-250, 50, 250, -275]
