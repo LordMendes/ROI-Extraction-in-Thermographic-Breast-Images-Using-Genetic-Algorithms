@@ -1,10 +1,14 @@
+import os
 import individual as ind
 import cardioid as c
 import cv2
 import random as r
-from math import ceil, floor
+from math import floor
+import sys
 
-TRIAL=3
+TRIAL = 4
+
+
 class GA:
     # CONSTANTS
     decimalArraySize = 10
@@ -12,7 +16,6 @@ class GA:
     GENERATIONS = 30
     ELITE_PERCENTAGE = 0.1
     mR = 0.05
-    cR = 0.7
 
     imagem = "img6"  # NOME DA IMAGEM QUE O GA RODAR�
 
@@ -100,6 +103,9 @@ class GA:
     def print_best_info(self):
         return self.population[0].print_info()
 
+    def get_best_info(self):
+        return self.population[0].get_info()
+
     def print_all(self):
         for i in self.population:
             print("Score: ", i.get_score())
@@ -110,17 +116,31 @@ class GA:
                 i.mutate()
 
 
-def run(img):
-    print(img.shape[0], img.shape[1])
+def run(img, trial):
     ga = GA()
+    generation_info = ""
+    TRIAL = trial
+    file_name = f'tests/{TRIAL}/generation_info.txt'
+    folder_name = f'tests/{TRIAL}'
+
+    # Check if the folder exists, and create it if it doesn't
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+    if not os.path.exists(file_name):
+        with open(file_name, 'w'):  # Create the file in write mode
+            pass  # Do nothing
+
     ga.initPop(img)
-    print("==========================================")
-    print("Generation ", 0)
-    print("Population size : ", len(ga.population))
-    print("==========================================")
-    print("best :")
-    ga.print_best()
-    print("==========================================")
+
+    with open(file_name, 'a') as file:
+        generation_info = f"============= GENERATION 0 =============\n"
+        generation_info += f"Population size : {len(ga.population)}\n"
+        generation_info += "================== BEST ==================\n"
+        generation_info += ga.get_best_info()
+        generation_info += "==========================================\n"
+        file.write(generation_info)
+
+    print(generation_info)
     ga.population[0].save_to_file(f'tests/{TRIAL}', 'gen_0')
     for i in range(ga.GENERATIONS):
         new_population = []
@@ -138,19 +158,30 @@ def run(img):
         ga.fitness_all()
         ga.population.sort(key=ga.sort_population, reverse=True)
 
-        print("============= GENERATION ", i+1, " =============")
-        print("Generation ", i+1)
-        print("Population size : ", len(ga.population))
-        print("================== BEST ==================")
-        ga.print_best_info()
-        print("==========================================")
+        with open(file_name, 'a') as file:
+            generation_info = f"============= GENERATION {i+1} =============\n"
+            generation_info += f"Population size : {len(ga.population)}\n"
+            generation_info += "================== BEST ==================\n"
+            generation_info += ga.get_best_info()
+            generation_info += "==========================================\n"
+            file.write(generation_info)
+
+        print(generation_info)
         ga.population[0].save_to_file(f'tests/{TRIAL}', f'gen_{i+1}')
     return ga.population[0]
 
 
 if __name__ == '__main__':
+    # Check if there are command-line arguments
+    if len(sys.argv) > 1:
+        # The first command-line argument (sys.argv[0]) is the script name, so the actual arguments start from sys.argv[1]
+        argument = sys.argv[1]
+        print("Trial number:", argument)
+    else:
+        print("No trial number provided.")
+
     img = cv2.imread("img6.jpg")
-    best_fit_individual = run(img)
+    best_fit_individual = run(img, argument)
     best_fit_individual.draw()
 
     cv2.waitKey(0)

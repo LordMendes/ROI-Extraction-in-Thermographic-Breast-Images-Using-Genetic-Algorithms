@@ -5,7 +5,7 @@ import random as r
 
 binarySize = 10
 color_interval = [0, 45, 140, 200, 256]
-color_weights = [-250, 50, 250, -375]
+color_weights = [-35, 5, 25, -27.5]
 
 
 class Individual:
@@ -119,3 +119,9 @@ class Individual:
               "    X: ", self.cardioid.x_cordinate.decimal, "\n",
               "    Y: ", self.cardioid.y_cordinate.decimal, "\n",
               "    R: ", self.cardioid.size.decimal)
+
+    def get_info(self):
+        return "Score: " + str(self.score) + "\n" + \
+               "    X: " + str(self.cardioid.x_cordinate.decimal) + "\n" + \
+               "    Y: " + str(self.cardioid.y_cordinate.decimal) + "\n" + \
+               "    R: " + str(self.cardioid.size.decimal) + "\n"
