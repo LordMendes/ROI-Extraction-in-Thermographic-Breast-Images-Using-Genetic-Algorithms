@@ -103,6 +103,6 @@ class Individual:
 
     def print_info(self):
         print("Score: ", self.score, "\n",
-              "X: ", self.cardioid.x_cordinate.decimal, "\n",
-              "Y: ", self.cardioid.y_cordinate.decimal, "\n",
-              "R: ", self.cardioid.size.decimal)
+              "    X: ", self.cardioid.x_cordinate.decimal, "\n",
+              "    Y: ", self.cardioid.y_cordinate.decimal, "\n",
+              "    R: ", self.cardioid.size.decimal)
