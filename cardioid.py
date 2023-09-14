@@ -1,7 +1,9 @@
+# from cmath import sqrt
+from math import atan2, sin, pi, sqrt
 import random as r
 
 mutation_rate = 0.5
-
+ARRAY_SIZE = 10
 
 class Cordinate:
     def __init__(self, n) -> None:
@@ -33,13 +35,13 @@ class Cordinate:
             n ^= mask
         return bin(n)[2:]
 
-    def int_to_binary(self, n, size=10):
+    def int_to_binary(self, n):
         binary_string = ""
         while n > 0:
             binary_string += str(n % 2)
             n //= 2
 
-        while len(binary_string) < size:
+        while len(binary_string) < ARRAY_SIZE:
             binary_string = "0" + binary_string
 
         return binary_string
@@ -47,19 +49,31 @@ class Cordinate:
     def binary_to_gray(self, n):
         n = int(n, 2)
         n ^= (n >> 1)
+        gray_code = bin(n)[2:]
+        while len(gray_code) < ARRAY_SIZE:
+            gray_code = "0" + gray_code
 
-        return bin(n)[2:]
+        return gray_code
 
 
 class Cardioid:
     def __init__(self, x, y, size) -> None:
         self.x_cordinate = Cordinate(x)
         self.y_cordinate = Cordinate(y)
-        self.radius = Cordinate(size)
+        self.size = Cordinate(size)
 
     def is_inside_cardioid(self, x, y):
-        return ((x - self.x_cordinate.int) ** 2 * (1 + ((y - self.y_cordinate.int) / self.radius.int) ** 2) + (y - self.y_cordinate.int) ** 2 - self.radius.int ** 2 )<= 0
+        size = self.size.int
+        x_c = self.x_cordinate.int
+        y_c = self.y_cordinate.int
+        r = size / 2
+        # distance = math.sqrt((x - x_c) ** 2 + (y - y_c) ** 2)
+        theta = atan2(y - y_c, x - x_c)
+        cardioid_equation = ((x - x_c) ** 2 + (y - y_c) ** 2) <= r ** 2 * (1 - sin(theta))
+        return cardioid_equation
+    
 
+    
     def will_mutate(self, mutation_rate):
         return r.uniform(0, 1) < mutation_rate
 
@@ -72,4 +86,5 @@ class Cardioid:
         if has_y_mutated:
             self.y_cordinate.mutate()
         if has_radius_mutated:
-            self.radius.mutate()
+            self.size.mutate()
+    

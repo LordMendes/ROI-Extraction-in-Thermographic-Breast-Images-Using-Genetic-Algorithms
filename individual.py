@@ -1,5 +1,5 @@
-import cardioid as c
 import cv2
+import cardioid as c
 import random as r
 
 binarySize = 10
@@ -11,19 +11,19 @@ class Individual:
 
     def __init__(self, img, cardioid='') -> None:
         self.img = img
+        self.cardioid = c.Cardioid(0, 0, 0)
         if cardioid != '':
             self.cardioid = cardioid
         else:
             x = int(img.shape[1]*r.uniform(0, 1))
             y = int(img.shape[0]*r.uniform(0, 1))
-            radius = int(img.shape[1]*r.uniform(0, 1)/2)
-            self.cardioid = c.Cardioid(x, y, radius)
+            size = int(img.shape[1]*r.uniform(0, 1)/2)
+            self.cardioid = c.Cardioid(x, y, size)
 
     def set_cardioid(self, cardioid):
         self.cardioid = cardioid
 
     def get_score(self):
-        self.fitness()
         return self.score
 
     def get_cardioid(self):
@@ -41,6 +41,9 @@ class Individual:
 
         # Get the pixel volume of the image.
         pixel_volume = self.get_pixel_volume()
+        
+        if (pixel_volume[0]+pixel_volume[1]+pixel_volume[2]+pixel_volume[3]) == 0:
+            return 0
 
         # Calculate the total color score.
         total_color_score = sum(
@@ -73,9 +76,27 @@ class Individual:
 
         return pixel_volume
 
+    def draw(self):
+        for i in range(self.img.shape[0]):
+            for j in range(self.img.shape[1]):
+                is_inside_cardioid = self.is_inside_cardioid(j, i)
+                if(is_inside_cardioid):
+                    self.img[i, j] = (255, 0, 0)
+        return self.img
+
+    def save_to_file(self, file_name):
+        clone = Individual(self.img.copy(), self.cardioid)
+        clone.draw()
+        cv2.imwrite('./{file_name}.png'.format(file_name=file_name), clone.img)
+
     def slice(self, point):
         # Slice the cardioid.
         self.cardioid.slice(point)
 
     def is_inside_cardioid(self, x, y):
         return self.cardioid.is_inside_cardioid(x, y)
+
+    def print_binary(self):
+        print("X: ",self.cardioid.x_cordinate.gray_code,
+              "Y: ",self.cardioid.y_cordinate.gray_code,
+              "R: ",self.cardioid.size.gray_code)
