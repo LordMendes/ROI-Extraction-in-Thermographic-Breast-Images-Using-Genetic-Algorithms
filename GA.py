@@ -1,4 +1,6 @@
+import math
 import os
+import time
 import individual as ind
 import cardioid as c
 import cv2
@@ -16,8 +18,6 @@ class GA:
     GENERATIONS = 50
     ELITE_PERCENTAGE = 0.1
     mR = 0.02
-
-    imagem = "img6"  # NOME DA IMAGEM QUE O GA RODAR�
 
     def __init__(self):
         self.population = []  # LISTA DE INDIVIDUOS
@@ -46,6 +46,13 @@ class GA:
     def fitness_all(self):
         for i in self.population:
             i.fitness()
+
+    # def fitness_all(self):
+    #     for i in self.population:
+    #         t = threading.Thread(target=i.fitness)
+    #         t.start()
+    #     for i in self.population:
+    #         t.join()
 
     def gray_to_decimal(self, gray_code):
         n = len(gray_code)
@@ -120,8 +127,8 @@ def run(img, trial):
     ga = GA()
     generation_info = ""
     TRIAL = trial
-    file_name = f'tests/{TRIAL}/generation_info.txt'
-    folder_name = f'tests/{TRIAL}'
+    folder_name = f'tests/timed/{TRIAL}'
+    file_name = f'{folder_name}/generation_info.txt'
 
     # Check if the folder exists, and create it if it doesn't
     if not os.path.exists(folder_name):
@@ -141,8 +148,9 @@ def run(img, trial):
         file.write(generation_info)
 
     print(generation_info)
-    ga.population[0].save_to_file(f'tests/{TRIAL}', 'gen_0')
+    ga.population[0].save_to_file(folder_name, 'gen_0')
     for i in range(ga.GENERATIONS):
+        start_time = time.time()
         new_population = []
         new_population = ga.population[:floor(
             ga.POPULATION_SIZE*ga.ELITE_PERCENTAGE)]
@@ -163,16 +171,20 @@ def run(img, trial):
             generation_info += f"Population size : {len(ga.population)}\n"
             generation_info += "================== BEST ==================\n"
             generation_info += ga.get_best_info()
+            generation_info += "================= TIMING =================\n"
+            generation_info += f"Time to run: {math.floor(time.time() - start_time)}s\n"
             generation_info += "==========================================\n"
             file.write(generation_info)
 
         print(generation_info)
-        ga.population[0].save_to_file(f'tests/{TRIAL}', f'gen_{i+1}')
+        ga.population[0].save_to_file(folder_name, f'gen_{i+1}')
     return ga.population[0]
 
 
 if __name__ == '__main__':
     # Check if there are command-line arguments
+
+    start_time = time.time()
     if len(sys.argv) > 1:
         # The first command-line argument (sys.argv[0]) is the script name, so the actual arguments start from sys.argv[1]
         argument = sys.argv[1]
@@ -182,6 +194,9 @@ if __name__ == '__main__':
 
     img = cv2.imread("img6.jpg")
     best_fit_individual = run(img, argument)
-    best_fit_individual.draw()
+    end_time = time.time()
+    print("Trial number:", argument)
+    print("Time to run:", end_time - start_time)
+    # best_fit_individual.draw()
 
     cv2.waitKey(0)

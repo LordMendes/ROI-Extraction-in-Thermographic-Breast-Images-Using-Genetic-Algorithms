@@ -37,17 +37,18 @@ class Individual:
 
     def fitness(self):
 
+        # Check if cordinates are inside the image
+        if self.cardioid.x_cordinate.decimal < 0 or self.cardioid.x_cordinate.decimal > self.img.shape[1]:
+            return 0
+        if self.cardioid.y_cordinate.decimal < 0 or self.cardioid.y_cordinate.decimal > self.img.shape[0]:
+            return 0
+
         # The total weight.
         total_weight = sum(color_weights)
 
         # Get the pixel volume of the image.
         pixel_volume = self.get_pixel_volume()
 
-        # Check if cordinates are inside the image
-        if self.cardioid.x_cordinate.decimal < 0 or self.cardioid.x_cordinate.decimal > self.img.shape[1]:
-            return 0
-        if self.cardioid.y_cordinate.decimal < 0 or self.cardioid.y_cordinate.decimal > self.img.shape[0]:
-            return 0
 
         if (pixel_volume[0]+pixel_volume[1]+pixel_volume[2]+pixel_volume[3]) == 0:
             return 0
