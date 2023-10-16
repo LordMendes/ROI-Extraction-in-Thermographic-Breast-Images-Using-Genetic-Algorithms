@@ -19,10 +19,9 @@ type GA struct {
 	Population []individual.Individual
 }
 
-const POPULATION_SIZE = 20
+const POPULATION_SIZE = 50
 const GENERATIONS = 50
 const ELITE_PERCENTAGE = 0.1
-const MUTATION_RATE = 0.02
 const ARRAY_SIZE = 10
 
 func (ga *GA) GetIndividual(index int) individual.Individual {
@@ -168,9 +167,8 @@ func (ga *GA) PrintPopulation() {
 	}
 }
 
-func (ga *GA) Run(img gocv.Mat) {
-	trialFolder := "tests/trial1"
-	os.Mkdir(trialFolder, os.ModePerm)
+func (ga *GA) Run(img gocv.Mat, folderName string) {
+	os.Mkdir(folderName, os.ModePerm)
 
 	ga.InitPopulation(img)
 	ga.FitnessAll()
@@ -179,7 +177,7 @@ func (ga *GA) Run(img gocv.Mat) {
 		start := time.Now()
 		fmt.Println("Generation: ", i, " Score: ", ga.GetBest().Score, "Population Size: ", ga.GetPopulationSize())
 		bestIndividual := ga.GetBest()
-		bestIndividual.SaveToFile(trialFolder + "/gen" + fmt.Sprint(i) + ".jpg")
+		bestIndividual.SaveToFile(folderName + "/gen" + fmt.Sprint(i) + ".jpg")
 		ga.FitnessAll()
 		ga.SortPopulation()
 		ga.Evolve(img)
@@ -193,7 +191,7 @@ func (ga *GA) Run(img gocv.Mat) {
 			Time:  duration.Milliseconds(),
 		})
 	}
-	gencsv.GenerateCSV(trialFolder+"/data.csv", data)
+	gencsv.GenerateCSV(folderName+"/data.csv", data)
 	ga.FitnessAll()
 	ga.SortPopulation()
 }
