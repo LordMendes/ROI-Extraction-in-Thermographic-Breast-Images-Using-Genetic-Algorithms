@@ -7,7 +7,8 @@ import (
 	"gocv.io/x/gocv"
 )
 
-var COLOR_WEIGHTS = [5]float64{-70, 15, 25, -20.5}
+// var COLOR_WEIGHTS = [5]float64{-70, 15, 25, -20.5}
+var COLOR_WEIGHTS = [5]float64{-90, 15, 25, -20.5}
 var COLOR_INTERVAL = [5]uint8{0, 45, 140, 200, 255}
 
 type Individual struct {

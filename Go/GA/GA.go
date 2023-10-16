@@ -21,7 +21,7 @@ type GA struct {
 
 const POPULATION_SIZE = 50
 const GENERATIONS = 50
-const ELITE_PERCENTAGE = 0.1
+const ELITE_PERCENTAGE = 0.25
 const ARRAY_SIZE = 10
 
 func (ga *GA) GetIndividual(index int) individual.Individual {
@@ -177,7 +177,7 @@ func (ga *GA) Run(img gocv.Mat, folderName string) {
 		start := time.Now()
 		fmt.Println("Generation: ", i, " Score: ", ga.GetBest().Score, "Population Size: ", ga.GetPopulationSize())
 		bestIndividual := ga.GetBest()
-		bestIndividual.SaveToFile(folderName + "/gen" + fmt.Sprint(i) + ".jpg")
+		// bestIndividual.SaveToFile(folderName + "/gen" + fmt.Sprint(i) + ".jpg")
 		ga.FitnessAll()
 		ga.SortPopulation()
 		ga.Evolve(img)
