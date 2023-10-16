@@ -3,10 +3,19 @@
 package main
 
 import (
+	"GA"
 	"fmt"
+	"time"
 
 	"gocv.io/x/gocv"
 )
+
+func timer(name string) func() {
+	start := time.Now()
+	return func() {
+		fmt.Printf("%s took %v\n", name, time.Since(start))
+	}
+}
 
 func main() {
 	// read image
@@ -18,11 +27,15 @@ func main() {
 		return
 	}
 
-	// display image in window
-	window := gocv.NewWindow("Lena")
-	window.IMShow(img)
+	ga := GA.GA{}
+	ga.Run(img)
+	best := ga.GetBest()
+	fmt.Println("X: ", best.Cardioid.GetXCoordinate().GetDecimal())
+	fmt.Println("Y: ", best.Cardioid.GetYCoordinate().GetDecimal())
+	fmt.Println("Size: ", best.Cardioid.GetSize().GetDecimal())
+	bestImg := best.Draw()
+	window := gocv.NewWindow("GATIS")
+	window.IMShow(bestImg)
 	window.WaitKey(0)
-
-	// save image
-	gocv.IMWrite("data/out.jpg", img)
+	defer timer("main")()
 }

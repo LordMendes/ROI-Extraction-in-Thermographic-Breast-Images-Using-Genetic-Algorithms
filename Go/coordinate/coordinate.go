@@ -17,6 +17,12 @@ type Coordinate struct {
 
 const ARRAY_MAX_SIZE = 10
 
+func NewCoordinate(decimal int) Coordinate {
+	newCoordinate := Coordinate{decimal, "", ""}
+	newCoordinate.SetCoordinate(decimal)
+	return newCoordinate
+}
+
 func (c *Coordinate) SetDecimal(decimal int) {
 	c.decimal = decimal
 }
@@ -52,11 +58,10 @@ func (c *Coordinate) GetCoordinate() (int, string, string) {
 }
 
 func (c *Coordinate) DecimalToBinary(decimal int) string {
-	var binary string
-	for decimal > 0 {
-		remainder := decimal % 2
-		binary = strconv.Itoa(remainder) + binary
-		decimal = decimal / 2
+	binary := strconv.FormatInt(int64(decimal), 2)
+	// Pad the binary string with leading zeros if necessary
+	for len(binary) < ARRAY_MAX_SIZE {
+		binary = "0" + binary
 	}
 	return binary
 }
@@ -100,6 +105,12 @@ func (c *Coordinate) BinaryToDecimal(binary string) int {
 			decimal = decimal + int(math.Pow(2, float64(len(binary)-i-1)))
 		}
 	}
+	return decimal
+}
+
+func (c *Coordinate) GrayToDecimal(gray string) int {
+	binary := c.GrayToBinary(gray)
+	decimal := c.BinaryToDecimal(binary)
 	return decimal
 }
 
