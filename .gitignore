@@ -1,3 +1,4 @@
 *.png
 *.pyc
 credentials.json
+tests/
