@@ -1,4 +1,4 @@
-# :scroll: ROI Extraction in Thermographic Breast Images Using Genetic Algorithms :scroll:
+# :scroll: ROI Extraction in Thermographic Breast Images Using Genetic Algorithm :scroll:
 
 ### :dart: Work:
 
